@@ -1,4 +1,5 @@
-# Mon Vélo
+# Mon Vélo  
+__________________________________________________________________________________________________________________________________________
 
 Ce projet est le 3ème dans le parcours de formation d'Openclassrooms. Correspondant au métier du front-end avec l'utilisation de Javascript(JS).  
 
@@ -22,4 +23,8 @@ Ce projet est le 3ème dans le parcours de formation d'Openclassrooms. Correspon
 - Le code doit exploiter une API cartographique et l'API temps réel de API JCDecaux.  
 - Il doit également utiliser les API Web Storage et Canvas.
 
+__________________________________________________________________________________________________________________________________________
 
+
+## Createur
+Gael Dedenis.  
