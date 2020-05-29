@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
         slidesToScroll: 4,
         slideAuto: true 
     });
-})
+});
 
 // +++++ +++++ +++++ Map +++++ +++++ +++++
 
