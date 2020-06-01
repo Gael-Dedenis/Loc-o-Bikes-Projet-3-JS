@@ -54,6 +54,10 @@ header ul.flex__row {
     overflow: hidden;
 }
 
+.carousel__panorama::after
+
+
+
 .carousel__panorama::after {
     content: "";
     clear: both;

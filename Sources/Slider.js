@@ -18,17 +18,19 @@ class Carousel {
             slideAuto: true
         }, options)
         let numberSlide = [].slice.call(element.children); // Création d'un tableau avec le nbr d'enfants
-        this.root = this.createElmtWithClass('carousel'); // Conteneur du bloc mobile
+        this.currentSlide = 0; // Définit le 1er élément visible du carrousel
+        this.root = this.createElmtWithClass("carousel"); // Conteneur du bloc mobile
         this.panorama = this.createElmtWithClass('carousel__panorama'); // Création du bloc "mobile" du carrousel
-        root.appendChild(this.panorama);
+        this.root.appendChild(this.panorama);
         this.element.appendChild(this.root);
         this.items = numberSlide.map((slide) => {
             let item = this.createElmtWithClass("carousel__item");
             item.appendChild(slide);
             this.panorama.appendChild(item);
             return item;
-        })
+        });
         this.setStyle();
+        this.setNavigation();
     }
 
     /**
@@ -37,15 +39,14 @@ class Carousel {
      * @returns {HTMLElement}
      * 
      */
-    createElmtWithClass (className) // fonction de création de blocs
-    {
+    createElmtWithClass (className) {
         let div = document.createElement('div');
         div.setAttribute('class', className);
         return div;
     }
 
     /**
-     * Donne les dimensions aux différents éléments du carrousel
+     * Applique les dimensions aux différents éléments du carrousel
      * 
      */
 
@@ -53,6 +54,42 @@ class Carousel {
         let ratio = this.items.length * 100;
         this.panorama.style.width = ratio + "%"; // Définition de la largeur du bloc mobile
         this.items.forEach(item => item.style.width = (100 / this.items.length) + "%"); // Définition de la largeur d'un slide
+    }
+
+    /**
+     * Définitions des boutons de navigations du slider
+     * 
+     */
+
+    setNavigation () {
+        let nextButton = document.getElementById("controls__next");
+        let previousButton = document.getElementById("controls__previous");
+        nextButton.addEventListener('click', this.next.bind(this));
+        previousButton.addEventListener('click', this.previous.bind(this));
+    }
+
+    next () {
+        this.gotoSlide(this.currentSlide ++ );
+    }
+
+    previous () {
+        this.gotoSlide(this.currentSlide -- );
+    }
+
+    /**
+     * 
+     * Déplace le carrousel vers l'élément ciblé.
+     * @param {number} index 
+     * 
+     */
+    gotoSlide (index) {
+        if (index < 0) {
+            index = this.
+            console.log(index)
+        }
+        let translateX = index * -100 / this.items.length ;
+        this.panorama.style.transform = "translate3d(" + translateX + "%, 0, 0)" ;
+        this.currentItem = index ;
     }
 
 }
