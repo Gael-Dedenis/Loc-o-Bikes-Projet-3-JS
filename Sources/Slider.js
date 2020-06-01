@@ -7,7 +7,7 @@ class Carousel {
      * @param {HTMLElement} element 
      * @param {Object} options 
      * @param {Object} options.slidesToScroll Nombre d'éléments composant le carrousel
-     * @param {Object} options.slideAuto Défilement automatique (activé par défaut)
+     * @param {boolean} [options.slideAuto = true] Défilement automatique 
      * 
      */
 
@@ -47,7 +47,6 @@ class Carousel {
 
     /**
      * Applique les dimensions aux différents éléments du carrousel
-     * 
      */
 
     setStyle () {
@@ -58,7 +57,6 @@ class Carousel {
 
     /**
      * Définitions des boutons de navigations du slider
-     * 
      */
 
     setNavigation () {
@@ -69,11 +67,11 @@ class Carousel {
     }
 
     next () {
-        this.gotoSlide(this.currentSlide ++ );
+        this.gotoSlide(this.currentSlide ++);
     }
 
     previous () {
-        this.gotoSlide(this.currentSlide -- );
+        this.gotoSlide(this.currentSlide --);
     }
 
     /**
@@ -84,12 +82,14 @@ class Carousel {
      */
     gotoSlide (index) {
         if (index < 0) {
-            index = this.
-            console.log(index)
+            index = this.items.length - 1;
+            this.currentSlide = 3
+        } else if (index >= this.items.length) {
+            index = 0;
+            this.currentSlide = 0;
         }
-        let translateX = index * -100 / this.items.length ;
-        this.panorama.style.transform = "translate3d(" + translateX + "%, 0, 0)" ;
-        this.currentItem = index ;
+        let translateX = index * -100 / this.items.length;
+        this.panorama.style.transform = "translate3d(" + translateX + "%, 0, 0)";
+        this.currentItem = index;
     }
-
 }
