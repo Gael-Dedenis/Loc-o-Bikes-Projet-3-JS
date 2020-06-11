@@ -44,7 +44,7 @@ header ul.flex__row {
     justify-content: space-around;
     margin-top: 5px;
     padding: 10px 12px;
-    width: 20%;
+    width: 50%;
 }
 
 /* +++++ +++++ +++++ Carrousel +++++ +++++ +++++ */
@@ -55,7 +55,6 @@ header ul.flex__row {
 }
 
 .carousel__panorama::after
-
 
 
 .carousel__panorama::after {
