@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Loc'o'Bike</title>
+        <meta name="language" content="fr">
+        <meta name="description" content="Loc'o'Bike : l'application pour réserver mon vélo! Un déplacement propre et sportif :)">
+        <meta name="author" content="Gael Dedenis">
+
+    <!-- .......... Meta OpenGraph ........... -->
+        <meta property="og.type" content="website">
+        <meta property="og:title" content="Loc'o'Bike">
+        <meta property="og:language" content="fr">
+        <meta property="og:url" content="">
+        <meta property="og:image" content="">
+        <meta property="og:description" content="Loc'o'Bike : l'application pour réserver mon vélo! Un déplacement plus propre et sportif :)">
+        <meta property="og:author" content="Gael Dedenis">
+
+    <!-- .......... Meta Twitter Card ........ -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="Loc'o'Bike">
+        <meta name="twitter:language" content="fr">
+        <meta name="twitter:site" content="">
+        <meta name="twitter:image" content="">
+        <meta name="twitter:description" content="Loc'o'Bike : l'application pour réserver mon vélo! Un déplacement plus propre et sportif :)">
+        <meta name="twitter:creator" content="Gael Dedenis">
+
+    <!-- ............... Css ................. -->
+        <link rel="stylesheet" href="css/style.css">
+
+    <!-- ............... Fontawesome ................ -->
+    <script src="https://kit.fontawesome.com/3edaa60113.js" crossorigin="anonymous"></script>
+
+    </head>
+
+    <body>
+
+        <main>
+
+            <header class="flex__column">
+
+                <h1>Loc'o'Bike</h1>
+                <p>
+                    Retrouvez toutes les stations de vélos disponnibles sur Lyon. Profitez des bienfaits du déplacement à vélo pour un petit prix!
+                </p>
+
+<!-- .................... Slider ........................ -->
+
+                <div id="carousel--container" class="flex__column">
+
+                        <figure class="border flex__column">
+                            <img src="" srcset="" alt="On sélectionne une station sur la carte parmie celles disponnibles.">
+                            <figcaption>
+                                <span> 1 </span>
+                                Sélectionnez une station de votre choix.
+                            </figcaption>
+                        </figure>
+
+                        <figure class="border flex__column">
+                            <img src="" srcset="" alt="On voit les détails de la station sélectionnée précédement et on remplie les champs nécéssaires, puis on clique sur le bouton pour accepter les conditions d'utilisations et 'Réserver'.">
+                            <figcaption>
+                                <span> 2 </span>
+                                Regardez les détails de la station.
+                            </figcaption>
+                        </figure>
+
+                        <figure class="border flex__column">
+                            <img src="" srcset="" alt="On signe dans l'encadrement pour valider la réservation.">
+                            <figcaption>
+                                <span> 3 </span>
+                                Remplissez les champs pour réserver.
+                            </figcaption>
+                        </figure>
+
+                        <figure class="border flex__column">
+                            <img src="" srcset="" alt="On clique sur le bouton annuler pour annuler la réservation en cours.">
+                            <figcaption>
+                                <span> 4 </span>
+                                Pour annuler sa réservation en cours.
+                            </figcaption>
+                        </figure>
+
+                </div>
+
+<!-- ............................... Controles Slider .............................. -->
+
+                    <ul id="carousel-controls" class="border flex__row">
+
+                        <li>
+                            <i id="controls__previous" class="fas fa-arrow-left"></i>
+                        </li>
+                        <li>
+                            <i id="controls__play" class="fas fa-play"></i>
+                        </li>
+                        <li>
+                            <i id="controls__stop" class="fas fa-pause"></i>
+                        </li>
+                        <li>
+                            <i id="controls__next" class="fas fa-arrow-right"></i>
+                        </li>
+                        </li>
+
+                    </ul>
+
+            </header>
+
+<!-- ................................... Section carte + réservation ................................ -->
+
+            <section>
+
+                <div id="map">
+                <!-- Map -->
+                </div>
+
+                <div>
+                    <h2>Détails de la station</h2>
+                    <adress>
+                        <span id="nomStation"></span>
+                        <span id="adresseStation"></span>
+                        <span id="etatStation"></span>
+                    </adress>
+                    <form id="forms" method="" action="">
+                        <fieldset>
+                            <input id="nom" type="text" name="nom" placeholder="Nom" required>
+                            <input id="prenom" type="text" name="prenom" placeholder="Prénom" required>
+                            <input id="cgu" type="checkbox" required>J'accepte l'utilisation de mes données personnelles pour l'utilisation des services Loc'o'Bike.<br>
+                            Ces données sont utilisées strictement dans le cadre interne de Loc'o'Bike et ne sont ni revendues, ni échangées avec un/des service(s) tiers.
+                            <input id="Réserver" type="submit" value="Réserver">
+                        </fieldset>
+                    </form>
+                </div>
+
+                <canvas>
+                </canvas>
+
+                <p>Votre vélo est réservé à <span id="station"></span> par <span id="personne"></span>.<br>
+                    Temps restant avant annulation de la réservation : <span id="minuteur"></span>
+                </p>
+                <button id="cancel">
+                    Annuler ma réservation
+                </button>
+
+            </section>
+
+<!-- ........................... Pied de page ..................................... -->
+
+            <footer>
+
+                <ul>
+                    <li>
+                        <a href='mentions_legales.html' target='_blank'>
+                            Mentions légales
+                        </a>
+                    </li>
+                    <li>
+                        Réaliser par Gael Dedenis dans le cadre d'un projet de formation. Ceci est donc un site fictif.
+                    </li>
+                </ul>
+
+            </footer>
+
+        </main>
+
+        <script src="sources/ajax.js"></script>
+        <script src="sources/Slider.js"></script>
+        <script src="sources/Map.js"></script>
+        <script src="sources/Reservation.js"></script>
+        <script src="sources/Canvas.js"></script>
+        <script src="sources/main.js"></script>
+
+    </body>
+
+</html>

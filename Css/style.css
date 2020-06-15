@@ -1,0 +1,79 @@
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+ul {
+    list-style: none;
+}
+
+.border {
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 3px;
+}
+
+.flex__column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* +++++ +++++ +++++ header +++++ +++++ +++++ */
+
+figure.flex__column img {
+    height: auto;
+    max-width: 100%;
+}
+
+figure figcaption {
+    margin-bottom: 40px;
+    font-size: 1rem;
+}
+
+header ul.flex__row {
+    justify-content: space-around;
+    margin-top: 5px;
+    padding: 10px 12px;
+    width: 50%;
+}
+
+/* +++++ +++++ +++++ Carrousel +++++ +++++ +++++ */
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel__panorama::after
+
+
+.carousel__panorama::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.carousel__item {
+    float: left;
+}
+
+/* +++++ +++++ +++++ Carrousel controls +++++ +++++ +++++ */
+
+li i {
+    display: inline-block;
+    padding-top: 10px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    cursor:pointer;
+}
