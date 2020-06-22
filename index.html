@@ -32,6 +32,9 @@
 
     <!-- ............... Css ................. -->
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+            integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+            crossorigin=""/>
 
     <!-- ............... Fontawesome ................ -->
     <script src="https://kit.fontawesome.com/3edaa60113.js" crossorigin="anonymous"></script>
@@ -113,11 +116,11 @@
 
             <section>
 
-                <div id="map">
+                <div id="leaflet--map" class="bloc">
                 <!-- Map -->
                 </div>
 
-                <div>
+                <div class="bloc">
                     <h2>Détails de la station</h2>
                     <adress>
                         <span id="nomStation"></span>
@@ -167,7 +170,10 @@
         </main>
 
         <script src="sources/ajax.js"></script>
-        <script src="sources/Slider.js"></script>
+        <script src="sources/Carousel.js"></script>
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+                    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+                    crossorigin=""></script>
         <script src="sources/Map.js"></script>
         <script src="sources/Reservation.js"></script>
         <script src="sources/Canvas.js"></script>
