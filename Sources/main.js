@@ -1,11 +1,13 @@
-// +++++ +++++ +++++ Carrousel +++++ +++++ +++++
+"use strict";
 
+    // attente de la fin du chargement de la page
 document.addEventListener("DOMContentLoaded", function () {
+
+    // +++++ +++++ +++++ Carousel +++++ +++++ +++++
     let carousel = new Carousel(document.querySelector("#carousel--container"), {
         slidesToScroll: 4,
         slideAuto: true 
     });
-});
 
 // +++++ +++++ +++++ Map +++++ +++++ +++++
 
@@ -14,3 +16,5 @@ document.addEventListener("DOMContentLoaded", function () {
 // +++++ +++++ +++++ Formulaire réservation +++++ +++++ +++++
 
 // +++++ +++++ +++++ Canvas Signature +++++ +++++ +++++
+
+});
