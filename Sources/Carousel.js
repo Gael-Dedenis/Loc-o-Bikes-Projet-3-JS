@@ -1,6 +1,7 @@
 "use strict";
 
 class Carousel {
+
     options = {};
     currentIndex = 0;
     interval = false;
@@ -17,13 +18,14 @@ class Carousel {
      */
 
     constructor(element, options = {}) {
+
         this.element = element;
 
         this.setOptions( options );
-        this.setUI();
+        this.setCarouselUi();
         this.setStyle();
-        this.setUiEvents();
-        
+        this.setCarouselEvents();
+
         this.autoStart();
     }
 
@@ -37,46 +39,52 @@ class Carousel {
         return div;
     }
 
-    setOptions(options){
+    setOptions(options) {
         this.options = Object.assign({}, {
             slidesToScroll: 4,
             slideAuto: true
         }, options)
     }
 
-    setUI(){
-        // Modif DOM
+    // Modif DOM
+    setCarouselUi() {
+
         let numberSlide = [].slice.call(this.element.children); // Création d"un tableau avec le nbr d"enfants
-        this.root = this.createElmtWithClass("carousel"); // Conteneur du bloc mobile
-        this.panorama = this.createElmtWithClass("carousel__panorama"); // Création du bloc "mobile" du carrousel
+        this.root       = this.createElmtWithClass("carousel"); // Conteneur du bloc mobile
+        this.panorama   = this.createElmtWithClass("carousel__panorama"); // Création du bloc "mobile" du carrousel
+
         this.root.setAttribute("tabcurrentIndex", "0");
         this.root.appendChild(this.panorama);
         this.element.appendChild(this.root);
+
         this.items = numberSlide.map((slide) => {
             let item = this.createElmtWithClass("carousel__item");
             item.appendChild(slide);
             this.panorama.appendChild(item);
             return item;
-        });
+        }); 
     }
 
     //Applique les dimensions aux différents éléments du carrousel
     setStyle() {
         let ratio = this.items.length * 100;
-        this.panorama.style.width = ratio + "%"; // Définition de la largeur du bloc mobile
-        this.items.forEach(item => item.style.width = (100 / this.items.length) + "%"); // Définition de la largeur d"un slide
+        this.panorama.style.width = ratio + "%";
+        this.items.forEach(item => item.style.width = (100 / this.items.length) + "%");
     }
 
     //Définitions des boutons de navigations du slider
-    setUiEvents() {
-        var nextButton = document.getElementById("controls__next");
-        var previousButton = document.getElementById("controls__previous");
+    setCarouselEvents() {
+        // bouton next et prev
+        let nextButton      = document.getElementById("controls__next");
+        let previousButton  = document.getElementById("controls__previous");
+
         nextButton.addEventListener("click", this.goNext.bind(this));
         previousButton.addEventListener("click", this.goPrevious.bind(this));
 
-                // bouton Play & Pause
+        // bouton Play & Pause
         let playButton = document.getElementById("controls__play");
         let stopButton = document.getElementById("controls__stop");
+
         playButton.addEventListener("click", this.play.bind(this));
         stopButton.addEventListener("click", this.stop.bind(this));
 
@@ -84,15 +92,12 @@ class Carousel {
         document.addEventListener("keyup", this.keyControl.bind(this));
     }
 
-
     goNext() {
         this.gotoSlide(this.currentIndex ++);
-        console.log("next");
     }
 
     goPrevious() {
         this.gotoSlide(this.currentIndex --);
-        console.log("previous");
     }
 
     //Déplace le carrousel vers l"élément ciblé.
@@ -108,30 +113,38 @@ class Carousel {
 
     // controls au clavier
     keyControl = function(evt) {
-        if(evt.keyCode === 37) {
-            //this.currentIndex --;
-            this.goPrevious();
-        } else if(evt.keyCode === 39) {
-            //this.currentIndex ++;
-            this.goNext();
+        switch(evt.code) {
+            case "ArrowRight":
+                this.goNext();
+                break;
+            case "ArrowLeft":
+                this.goPrevious();
+                break;
+            case "Space":
+                this.stop();
+                break;
+            case "Enter":
+                this.play();
+                break;
         }
     }
 
-    // slide automatiquement play et stop
-    autoStart(){
-        if( this.options.slideAuto ){
+    // slide automatiquement
+    autoStart() {
+        if ( this.options.slideAuto ){
             this.play();
         }
     }
 
+    // play et stop
     play() {
-        if ( !this.interval ) {
-            this.interval = setInterval(this.goNext.bind(this), 1000);
+        if(!this.interval) {
+            this.interval = setInterval(this.goNext.bind(this), 5000);
         }
     }
 
     stop() {
-        if (this.interval) {
+        if(this.interval) {
             clearInterval(this.interval);
             this.interval = false;
         }
