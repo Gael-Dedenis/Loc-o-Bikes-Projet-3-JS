@@ -9,12 +9,16 @@ document.addEventListener("DOMContentLoaded", function () {
         slideAuto: true 
     });
 
-// +++++ +++++ +++++ Map +++++ +++++ +++++
+    // +++++ +++++ +++++ Map +++++ +++++ +++++
+    let map = new Map(document.querySelector("#leaflet--map"), 12, {
+        lat: 45.750000,
+        lng: 4.850000
+    });
 
-// +++++ +++++ +++++ Détails Stations +++++ +++++ +++++
+    // +++++ +++++ +++++ Détails Stations +++++ +++++ +++++
 
-// +++++ +++++ +++++ Formulaire réservation +++++ +++++ +++++
+    // +++++ +++++ +++++ Formulaire réservation +++++ +++++ +++++
 
-// +++++ +++++ +++++ Canvas Signature +++++ +++++ +++++
+    // +++++ +++++ +++++ Canvas Signature +++++ +++++ +++++
 
 });
