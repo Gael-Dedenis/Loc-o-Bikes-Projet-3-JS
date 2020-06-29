@@ -1,26 +1,60 @@
 "use strict";
 
-function newCall(url, callback) {
+class Ajax {
 
-    var request = new XMLHttpRequest();
+    /**
+     * 
+     * @param {string} url
+     * @param {function} callback
+     * 
+     */
 
-    request.open("GET", url);
+    constructor(url, callback = null) {
+    this.request = new XMLHttpRequest();
 
-    // Control de l'avancement de la requette
-    request.onreadystatechange = function() {
-        console.log("Avancement de la requête : " + request.readyState + " /4");
+    this.url = url;
+    this.callback = callback;
+
+    this.setCallback();
+    this.getAjax();
+
+    }
+
+    //Création d'un appel par la méthode GET
+    getAjax() {
+        this.request.open("GET", "this.url");
+        this.startAjax();
+    }
+
+    startAjax() {
+        this.listenAjax();
+        this.request.send();
+    }
+
+    setCallback(response) {
+        if (this.callback === null) {
+            this.callback = console.log(response);
+        }
+    }
+
+    // Ajout écouteurs événements Ajax
+    listenAjax() {
+        this.request.addEventListener("load", this.listenLoad.bind(this));
+        this.request.addEventListener("error", this.listenError.bind(this));
     }
 
     // Détection Fin de l'appel
-    request.addEventListener("load", function() {
-        if (request.status >= 200 && request.status < 400) {
-            console.log("Toutes les ressources sont chargées !");
-            let jsonResponse = JSON.parse(this.response);
-            callback(jsonResponse);
-        } else {
-            console.error(request.status + " " + request.statusText + " " + url);
-        }
-    });
+    listenLoad() {
+        if (this.request.status >= 200 && this.request.status < 400) {
+        this.callback(this.request.responseText);
 
-    req.send(null);
+        } else {
+            console.error(this.request.status + " " + this.request.statusText + " " + this.url);
+        }
+    }
+
+    listenError() {
+        console.error("Network Error @URL => " + this.url);
+    }
+
 }
