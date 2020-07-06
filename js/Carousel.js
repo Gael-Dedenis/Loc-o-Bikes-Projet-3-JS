@@ -93,11 +93,11 @@ class Carousel {
     }
 
     goNext() {
-        this.gotoSlide(this.currentIndex ++);
+        this.gotoSlide(this.currentIndex += 1);
     }
 
     goPrevious() {
-        this.gotoSlide(this.currentIndex --);
+        this.gotoSlide(this.currentIndex -= 1);
     }
 
     //Déplace le carrousel vers l"élément ciblé.
