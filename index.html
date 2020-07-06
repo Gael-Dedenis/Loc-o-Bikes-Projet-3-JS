@@ -118,30 +118,34 @@
                 <!-- Map -->
                 </div>
 
-                <div>
-                    <h2>Détails de la station</h2>
-                    <adress>
-                        <span id="nomStation"></span>
-                        <span id="adresseStation"></span>
-                        <span id="etatStation"></span>
-                    </adress>
-                    <form id="forms" method="" action="">
-                        <fieldset>
-                            <input id="nom" type="text" name="nom" placeholder="Nom" required>
-                            <input id="prenom" type="text" name="prenom" placeholder="Prénom" required>
-                            <input id="cgu" type="checkbox" required>J'accepte l'utilisation de mes données personnelles pour l'utilisation des services Loc'o'Bike.<br>
-                            Ces données sont utilisées strictement dans le cadre interne de Loc'o'Bike et ne sont ni revendues, ni échangées avec un/des service(s) tiers.
-                            <input id="Réserver" type="submit" value="Réserver">
-                        </fieldset>
-                    </form>
-                </div>
+                <form id="forms" method="" action="">
 
-                <canvas>
-                </canvas>
+                    <h2>Détails de la station</h2>
+
+                    <adress>
+                        <span id="nameStation"></span>
+                        <span id="adressStation"></span>
+                        <span id="statusStation"></span>
+                        <span>Vélo(s): <span id="numberBikes"></span> / <span id="numberPlaces"></span></span>
+                    </adress>
+
+                    <fieldset>
+                        <input id="nom" type="text" name="nom" placeholder="Nom" required>
+                        <input id="prenom" type="text" name="prenom" placeholder="Prénom" required>
+                        <input id="cgu" type="checkbox" required>J'accepte l'utilisation de mes données personnelles pour l'utilisation des services Loc'o'Bike.<br>
+                        Ces données sont utilisées strictement dans le cadre interne de Loc'o'Bike et ne sont ni revendues, ni échangées avec des services tiers.
+                        <input id="Réserver" type="submit" value="Réserver">
+                    </fieldset>
+
+                    <canvas>
+                    </canvas>
+
+                </form>
 
                 <p>Votre vélo est réservé à <span id="station"></span> par <span id="personne"></span>.<br>
                     Temps restant avant annulation de la réservation : <span id="minuteur"></span>
                 </p>
+
                 <button id="cancel">
                     Annuler ma réservation
                 </button>
@@ -159,7 +163,7 @@
                         </a>
                     </li>
                     <li>
-                        Réaliser par Gael Dedenis dans le cadre d'un projet de formation. Ceci est donc un site fictif.
+                        Réaliser par Gael Dedenis dans le cadre d'un projet de formation. Ceci est donc un site fictif. Utilisant les technologies des API Leafletjs & JCDecaux.
                     </li>
                 </ul>
 
@@ -171,12 +175,12 @@
         <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
-        <script src="sources/ajax.js"></script>
-        <script src="sources/Carousel.js"></script>
-        <script src="sources/Map.js"></script>
-        <script src="sources/Reservation.js"></script>
-        <script src="sources/Canvas.js"></script>
-        <script src="sources/main.js"></script>
+        <script src="js/ajax.js"></script>
+        <script src="js/Carousel.js"></script>
+        <script src="js/Map.js"></script>
+        <script src="js/Reservation.js"></script>
+        <script src="js/Canvas.js"></script>
+        <script src="js/main.js"></script>
 
     </body>
 
