@@ -9,13 +9,12 @@ class Ajax {
      * 
      */
 
-    constructor(url, callback = null) {
+    constructor(url, callback) {
     this.request = new XMLHttpRequest();
 
     this.url = url;
     this.callback = callback;
 
-    this.setCallback();
     this.getAjax();
 
     }
@@ -23,18 +22,8 @@ class Ajax {
     //Création d'un appel par la méthode GET
     getAjax() {
         this.request.open("GET", "this.url");
-        this.startAjax();
-    }
-
-    startAjax() {
         this.listenAjax();
         this.request.send();
-    }
-
-    setCallback(response) {
-        if (this.callback === null) {
-            this.callback = console.log(response);
-        }
     }
 
     // Ajout écouteurs événements Ajax
