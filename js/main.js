@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // +++++ +++++ +++++ Map +++++ +++++ +++++
-    let map = new Map(document.querySelector("#leaflet--map"), 12, {
+    let map = new Map(document.querySelector("#leaflet--map"), 15, {
         lat: 45.750000,
-        lng: 4.850000
+        long: 4.850000
     });
 
     // +++++ +++++ +++++ Détails Stations +++++ +++++ +++++
