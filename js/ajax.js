@@ -10,18 +10,20 @@ class Ajax {
      */
 
     constructor(url, callback) {
-    this.request = new XMLHttpRequest();
 
-    this.url = url;
-    this.callback = callback;
+        this.request = new XMLHttpRequest();
 
-    this.getAjax();
+        this.url = url;
+        this.callback = callback;
+
+        this.getAjax();
 
     }
 
     //Création d'un appel par la méthode GET
     getAjax() {
-        this.request.open("GET", "this.url");
+        this.request.open("GET", this.url);
+        this.checkStatus();
         this.listenAjax();
         this.request.send();
     }
@@ -46,4 +48,9 @@ class Ajax {
         console.error("Network Error @URL => " + this.url);
     }
 
+    checkStatus() {
+        if(this.request.status == 404) 
+            throw new Error(this.url + ' replied 404');
+    }
+    
 }
