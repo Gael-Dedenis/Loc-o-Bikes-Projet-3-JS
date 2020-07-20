@@ -21,12 +21,6 @@ class Map {
         this.coordonnees = coordonnees;
         this.zoomLevel = zoomLevel;
 
-        this.nameStation = document.getElementById("nameStation");
-        this.adressStation = document.getElementById("adressStation");
-        this.statusStation = document.getElementById("statusStation");
-        this.numberBikes = document.getElementById("numberBikes");
-        this.numberPlaces = document.getElementById("numberPlaces");
-
         this.requetAjax = new Ajax("https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=12eabafe239b1cf5964929dff783e2a53f297fc4", response => {
             this.stations = JSON.parse(response);
             this.setMarkerOnMap();
@@ -66,7 +60,7 @@ class Map {
 
     setMarkerOnMap() {
 
-        // créations des markeurs
+        // créations des marqueurs
         this.markerLeaflet = L.Icon.extend({
             options: {
                 shadowUrl: "img/leafletjs-icons/pointeur-shadow.png",
@@ -74,7 +68,7 @@ class Map {
                 shadowSize:   [70, 70],
                 iconAnchor:   [0, 0],
                 shadowAnchor: [0, 0],
-                popupAnchor:  [-3, -76]
+                popupAnchor:  [17, -5]
             }
         });
 
@@ -84,31 +78,82 @@ class Map {
         this.greyIcon = new this.markerLeaflet({iconUrl: "img/leafletjs-icons/pointeur-gris.png"});
 
         // placement des marqueurs sur la map
-        this.stations.forEach(station => {
-
-            if (station.status === "CLOSED")
-                return this.createMarker ({position : station.position, icon : this.greyIcon});
-
-            if (station.available_bikes === 0 && station.available_bike_stands >= 1)
-                return this.createMarker ({position : station.position, icon : this.redIcon});
-
-            if (station.available_bike_stands > station.available_bikes &&  station.available_bikes > 1)
-                return this.createMarker ({position : station.position, icon : this.orangeIcon});
-
-            this.createMarker ({position : station.position, icon : this.greenIcon});
-
-        });
+        this.stations.forEach(station => this.checkStation(station));
 
     }
 
+    // vérifications des conditions sur l'objet station
+    checkStation(station) {
+
+        if (station.status === "CLOSED") {
+
+            this.createMarker ({position : station.position, icon : this.greyIcon});
+            this.setPopup(station);
+
+        }
+
+        else if (station.available_bikes === 0 && station.available_bike_stands >= 1) {
+
+            this.createMarker ({position : station.position, icon : this.redIcon});
+            this.setPopup(station);
+
+        }
+
+        else if (station.available_bike_stands > station.available_bikes &&  station.available_bikes > 1) {
+
+            this.createMarker ({position : station.position, icon : this.orangeIcon});
+            this.setPopup(station);
+
+        }
+
+        else {
+
+            this.createMarker ({position : station.position, icon : this.greenIcon});
+            this.setPopup(station);
+
+        }
+
+    }
+
+    // Méthode de création de marqueurs
     createMarker(settings) {
 
         if (settings.position === undefined) throw new Error("Please provide a position");
         if (settings.icon === undefined) throw new Error("Please provide an icon");
 
-        L.marker(settings.position, {icon: settings.icon}).addTo(this.map);
+        this.marker = L.marker(settings.position, {icon: settings.icon}).addTo(this.map);
 
     }
 
+    setPopup(station) {
+
+        this.dataStationName = station.name;
+        this.dataStationAdress = station.address;
+        this.dataStationStatus = station.status;
+        this.dataNumberBikes = station.available_bikes;
+        this.dataNumberPlaces = station.available_bike_stands;
+
+        this.marker.bindPopup(station.name + "<br>" + station.address + "<br> Vélos disponnibles : " + station.available_bikes).on("click", function(station) {
+
+            this.nameStation = document.getElementById("nameStation");
+            this.adressStation = document.getElementById("adressStation");
+            this.statusStation = document.getElementById("statusStation");
+            this.bikes = document.getElementById("bikes");
+            this.places = document.getElementById("places");
+
+            this.nameStation.innerHTML = "Nom de la station : " + this.dataStationName;
+            this.adressStation.innerHTML = "Adresse : " + station.this.dataStationAdress;
+    
+            if (this.dataStationStatus === "OPEN") {
+                this.statusStation.innerHTML = "Status de la station: Ouverte";
+                this.bikes.innerHTML = "Vélo(s) disponible(s) : " + this.dataNumberBikes;
+                this.places.innerHTML = "Place(s) disponible(s) : " + this.dataNumberPlaces;
+            }
+            if (this.dataStationStatus === "CLOSED") {
+                this.statusStation.innerHTML = "Status de la station: Fermée";
+            }
+        });
+
+    }
 
 }
