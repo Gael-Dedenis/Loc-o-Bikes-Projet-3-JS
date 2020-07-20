@@ -9,32 +9,23 @@ class Ajax {
      * 
      */
 
-    constructor(url, callback = null) {
-    this.request = new XMLHttpRequest();
+    constructor(url, callback) {
 
-    this.url = url;
-    this.callback = callback;
+        this.request = new XMLHttpRequest();
 
-    this.setCallback();
-    this.getAjax();
+        this.url = url;
+        this.callback = callback;
+
+        this.getAjax();
 
     }
 
     //Création d'un appel par la méthode GET
     getAjax() {
-        this.request.open("GET", "this.url");
-        this.startAjax();
-    }
-
-    startAjax() {
+        this.request.open("GET", this.url);
+        this.checkStatus();
         this.listenAjax();
         this.request.send();
-    }
-
-    setCallback(response) {
-        if (this.callback === null) {
-            this.callback = console.log(response);
-        }
     }
 
     // Ajout écouteurs événements Ajax
@@ -57,4 +48,9 @@ class Ajax {
         console.error("Network Error @URL => " + this.url);
     }
 
+    checkStatus() {
+        if(this.request.status == 404) 
+            throw new Error(this.url + ' replied 404');
+    }
+    
 }
