@@ -114,22 +114,24 @@
 
             <section>
 
-                <div id="leaflet--map" class="bloc">
+                <figure id="leaflet--map" class="bloc">
                 <!-- Map -->
-                </div>
+                </figure>
 
                 <form id="forms" method="" action="">
 
                     <h2>Détails de la station</h2>
 
-                    <adress>
-                        <span id="nameStation"></span>
-                        <span id="adressStation"></span>
-                        <span id="statusStation"></span>
-                        <span>Vélo(s): <span id="numberBikes"></span> / <span id="numberPlaces"></span></span>
-                    </adress>
-
                     <fieldset>
+                        <adress>
+                            <ol>
+                                <li id="nameStation"></li>
+                                <li id="adressStation"></li>
+                                <li id="statusStation"></li>
+                                <li id="bikes"></li>
+                                <li id="places"></li>
+                            </ol>
+                        </adress>
                         <input id="nom" type="text" name="nom" placeholder="Nom" required>
                         <input id="prenom" type="text" name="prenom" placeholder="Prénom" required>
                         <input id="cgu" type="checkbox" required>J'accepte l'utilisation de mes données personnelles pour l'utilisation des services Loc'o'Bike.<br>
@@ -142,15 +144,17 @@
 
                 </form>
 
+            <div id="infosReservation" class="hidden">
                 <p>Votre vélo est réservé à <span id="station"></span> par <span id="personne"></span>.<br>
-                    Temps restant avant annulation de la réservation : <span id="minuteur"></span>
+                    Temps restant avant annulation de la réservation : <span id="mins"></span> min <span id="sec"></span>
                 </p>
 
                 <button id="cancel">
                     Annuler ma réservation
                 </button>
+            </div>
 
-            </section>
+                </section>
 
 <!-- ........................... Pied de page ..................................... -->
 
