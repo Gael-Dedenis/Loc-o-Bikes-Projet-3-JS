@@ -15,9 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
         long: 4.850000
     });
 
-    // +++++ +++++ +++++ Détails Stations +++++ +++++ +++++
-
     // +++++ +++++ +++++ Formulaire réservation +++++ +++++ +++++
+    let reservation = new Reservations(document.getElementById("forms"));
 
     // +++++ +++++ +++++ Canvas Signature +++++ +++++ +++++
 
