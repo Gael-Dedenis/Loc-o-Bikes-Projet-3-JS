@@ -2,14 +2,25 @@
 
 class Reservations {
 
-    constructor(container) {
+    constructor() {
 
         this.infosReservation = document.getElementById("infosReservation");
 
+        this.setReservationEvents();
     }
 
     // Evenements
     setReservationEvents() {
+
+        //recup données formulaire
+        this.btnReserver = document.getElementById("reserver");
+
+        this.btnReserver.addEventListener("click", (evt) => {
+            evt.preventDefault();
+
+            this.checkDataReservation();
+            this.setTimer();
+        });
 
         //Cancel btn
         let cancelButton = document.getElementById("cancel");
@@ -17,68 +28,94 @@ class Reservations {
         cancelButton.addEventListener("click", this.cancelReservation());
     }
 
+    // vérification des données renseignées
+    checkDataReservation() {
+        this.lastName = document.getElementById("nom");
+        this.firstName = document.getElementById("prenom");
+
+        if (this.lastName.value === "") {
+            alert("Merci de renseigner votre nom pour valider votre réservation.");
+        }else if(this.firstName.value === "") {
+            alert("Merci de renseigner votre prénom pour valider votre réservation.");
+        } else {
+            this.setDataLocalStorage.bind(this);
+        }
+    }
 
     // methode stockage localeStorage
-    setDataLocalStorage (nameLocal, keyLocal, valueLocal) {
+    setDataLocalUser() {
+        this.setDataLocalStorage("lastname", this.lastName.value);
+        this.setDataLocalStorage("firstname", this.firstName.value);
+    }
 
-        this.nameLocal = nameLocal;
-        this.keyLocal = keyLocal;
-        this.valueLocal = valueLocal;
+    setDataLocalStorage(setKeyLocal, setValueLocal) {
+        localStorage.setItem(setKeyLocal, setValueLocal);
+    }
 
-        this.nameLocal = localStorage.setItem(this.keyLocal, this.valueLocal);
+    getDataLocalStorage(nameLocal, keylocal) {
+        this.getNameLocal  = nameLocal;
+        this.getKeyLocal   = keylocal;
 
+        this.getNameLocal = localStorage.getItem(this.getKeyLocal);
     }
 
     // methode stockage sessionStorage
-    setDataSessionStorage (nameSession, keySession, valueSession) {
+    checkDataSessionStorage(keySession, valueSession) {
+        if(keySession   === undefined) throw new Error("Merci de renseigner un NOM pour la clé du jeux de données de la session !");
+        if(valueSession === undefined) throw new Error("Merci de renseigner une valeur !");
 
-        this.nameSession = nameSession;
-        this.keySession = keySession;
-        this.valueSession = valueSession;
+        this.setDataSession(keySession, v);
+    }
 
-        this.nameSession = sessionStorage.setItem(this.keySession, this.valueSession);
+    setDataSessionStorage(keySession, valueSession) {
+        this.setKeySession   = keySession;
+        this.setValueSession = valueSession;
 
+        sessionStorage.setItem(this.setKeySession, this.setValueSession);
+    }
+
+    getDataSessionStorage(nameSession, keySession) {
+        this.getNameSession  = nameSession;
+        this.getKeySession   = keySession;
+
+        this.getNameSession = sessionStorage.getItem(this.getKeySession);
     }
 
     // Timer reservation
     setTimer() {
+        this.timer   = "";
 
-        this.timer = "";
-        this.minute = document.getElementById("mins");
+        this.minute  = document.getElementById("mins");
         this.seconde = document.getElementById("sec");
+
         this.timeMin = 20;
         this.timeSec = 0;
 
         this.timer = setInterval(this.countDown.bind(this), 1000);
-
     }
 
     countDown() {
-
         sessionStorage.setItem("timeMin",this.timeMin);
         sessionStorage.setItem("timeSec",this.timeSec);
+
         this.timeSec--;
         this.seconde.innerHTML = this.timeSec;
-        console.log("seconde :" + this.timeSec);
+
         if (this.timeSec <= 0) {
             this.timeSec = 59;
             this.timeMin--;
             this.minute.innerHTML = this.timeMin;
-            console.log("timer : " + this.timeMin + "min " + this.timeSec + "sec");
         }
+
         if (this.timeMin < 0) {
             clearInterval(this.timer);
         }
-
     }
 
     //Cancel reservation
     cancelReservation () {
-
         clearInterval(this.timer);
         this.infosReservation.classList.add("hidden");
-
     }
-
 
 }
