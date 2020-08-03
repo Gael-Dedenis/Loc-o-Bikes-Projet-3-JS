@@ -16,8 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // +++++ +++++ +++++ Formulaire réservation +++++ +++++ +++++
-    let reservation = new Reservations(document.getElementById("forms"));
+    let reservation = new Reservation(document.getElementById("forms"));
 
     // +++++ +++++ +++++ Canvas Signature +++++ +++++ +++++
+    let canvas = new Canvas(document.getElementById("canvas"), "2d");
 
 });
