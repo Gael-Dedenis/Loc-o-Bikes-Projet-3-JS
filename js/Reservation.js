@@ -1,10 +1,12 @@
 "use strict";
 
-class Reservations {
+class Reservation {
 
     constructor() {
 
         this.infosReservation = document.getElementById("infosReservation");
+        this.lastName = document.getElementById("nom");
+        this.firstName = document.getElementById("prenom");
 
         this.setReservationEvents();
     }
@@ -13,32 +15,45 @@ class Reservations {
     setReservationEvents() {
 
         //recup données formulaire
-        this.btnReserver = document.getElementById("reserver");
+        let btnReserver = document.getElementById("reserver");
 
-        this.btnReserver.addEventListener("click", (evt) => {
+        btnReserver.addEventListener("click", (evt) => {
             evt.preventDefault();
 
             this.checkDataReservation();
-            this.setTimer();
         });
 
         //Cancel btn
         let cancelButton = document.getElementById("cancel");
 
-        cancelButton.addEventListener("click", this.cancelReservation());
+        cancelButton.addEventListener("click", (evt) => {
+            evt.preventDefault();
+
+            this.cancelReservation();
+        });
     }
 
     // vérification des données renseignées
     checkDataReservation() {
-        this.lastName = document.getElementById("nom");
-        this.firstName = document.getElementById("prenom");
 
-        if (this.lastName.value === "") {
-            alert("Merci de renseigner votre nom pour valider votre réservation.");
-        }else if(this.firstName.value === "") {
-            alert("Merci de renseigner votre prénom pour valider votre réservation.");
+        this.stockedLastName  = this.getDataLocalStorage("lastname");
+        this.stockedFirstName = this.getDataLocalStorage("firstname");
+
+        if (this.stockedLastName !== undefined && this.stockedFirstName !== undefined) {
+            this.lastName.innerHTML  = this.stockedLastName;
+            this.firstName.innerHTML = this.stockedFirstName;
         } else {
-            this.setDataLocalStorage.bind(this);
+            console.log("Alors enregistront les données")
+            if (this.lastName.value === "") {
+                alert("Merci de renseigner votre nom pour valider votre réservation.");
+            }else if(this.firstName.value === "") {
+                alert("Merci de renseigner votre prénom pour valider votre réservation.");
+            } else {
+                this.setDataLocalUser();
+                this.setTimer();
+
+                this.infosReservation.classList.remove("hidden");
+            }
         }
     }
 
@@ -52,19 +67,24 @@ class Reservations {
         localStorage.setItem(setKeyLocal, setValueLocal);
     }
 
-    getDataLocalStorage(nameLocal, keylocal) {
-        this.getNameLocal  = nameLocal;
-        this.getKeyLocal   = keylocal;
+    getDataLocalStorage(keylocal) {
+        this.getKeyLocal = keylocal;
 
-        this.getNameLocal = localStorage.getItem(this.getKeyLocal);
+        localStorage.getItem(this.getKeyLocal);
     }
 
     // methode stockage sessionStorage
     checkDataSessionStorage(keySession, valueSession) {
-        if(keySession   === undefined) throw new Error("Merci de renseigner un NOM pour la clé du jeux de données de la session !");
-        if(valueSession === undefined) throw new Error("Merci de renseigner une valeur !");
 
-        this.setDataSession(keySession, v);
+        if (keySession   === undefined) {
+            throw new Error("Merci de renseigner un NOM pour la clé du jeux de données de la session !");
+        }
+
+        if (valueSession === undefined) {
+            throw new Error("Merci de renseigner une valeur !");
+        }
+
+        this.setDataSession(keySession, valueSession);
     }
 
     setDataSessionStorage(keySession, valueSession) {
