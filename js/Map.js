@@ -16,7 +16,6 @@ class Map {
      */
 
     constructor(container, zoomLevel, coordonnees){
-
         this.container = container;
         this.coordonnees = coordonnees;
         this.zoomLevel = zoomLevel;
@@ -27,25 +26,19 @@ class Map {
             });
 
         this.initMap();
-
     }
 
     // Création du fond de map
     initMap() {
-
         this.setLeafletMap();
         this.addTiles();
-
     }
 
     setLeafletMap() {
-
         this.map = L.map(this.container).setView([this.coordonnees.lat, this.coordonnees.long], this.zoomLevel);
-
     }
 
     addTiles() {
-
         L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
@@ -55,11 +48,9 @@ class Map {
             zoomOffset: -1,
             accessToken: "pk.eyJ1IjoiZ2FlbC1kMDEiLCJhIjoiY2ticThwajhmMW1odjJ5cG9kc2l6bHNmYSJ9.hs-ROGcYy_M4O7LWX8mNTg"
         }).addTo(this.map);
-
     }
 
     setMarkerOnMap() {
-
         // créations des marqueurs
         this.markerLeaflet = L.Icon.extend({
             options: {
@@ -79,81 +70,64 @@ class Map {
 
         // placement des marqueurs sur la map
         this.stations.forEach(station => this.checkStation(station));
-
     }
 
     // vérifications des conditions sur l'objet station
     checkStation(station) {
-
         if (station.status === "CLOSED") {
-
             this.createMarker ({position : station.position, icon : this.greyIcon});
             this.setPopup(station);
-
         }
 
         else if (station.available_bikes === 0 && station.available_bike_stands >= 1) {
-
             this.createMarker ({position : station.position, icon : this.redIcon});
             this.setPopup(station);
-
         }
 
         else if (station.available_bike_stands > station.available_bikes &&  station.available_bikes > 1) {
-
             this.createMarker ({position : station.position, icon : this.orangeIcon});
             this.setPopup(station);
-
         }
 
         else {
-
             this.createMarker ({position : station.position, icon : this.greenIcon});
             this.setPopup(station);
-
         }
-
     }
 
     // Méthode de création de marqueurs
     createMarker(settings) {
-
         if (settings.position === undefined) throw new Error("Please provide a position");
         if (settings.icon === undefined) throw new Error("Please provide an icon");
 
         this.marker = L.marker(settings.position, {icon: settings.icon}).addTo(this.map);
-
     }
 
     setPopup(station) {
+        this.marker.bindPopup(station.name + "<br>" + station.address + "<br> Vélos disponnibles : " + station.available_bikes).on("click", this.getDetailsStation.bind(this, station));
+    }
 
-        this.dataStationName = station.name;
-        this.dataStationAdress = station.address;
-        this.dataStationStatus = station.status;
-        this.dataNumberBikes = station.available_bikes;
-        this.dataNumberPlaces = station.available_bike_stands;
+    getDetailsStation(station) {
+        this.nameStation    = document.getElementById("nameStation");
+        this.addressStation = document.getElementById("addressStation");
+        this.statusStation  = document.getElementById("statusStation");
+        this.bikes          = document.getElementById("bikes");
+        this.places         = document.getElementById("places");
 
-        this.marker.bindPopup(station.name + "<br>" + station.address + "<br> Vélos disponnibles : " + station.available_bikes).on("click", function(station) {
+        let statusStation = station.status;
 
-            this.nameStation = document.getElementById("nameStation");
-            this.adressStation = document.getElementById("adressStation");
-            this.statusStation = document.getElementById("statusStation");
-            this.bikes = document.getElementById("bikes");
-            this.places = document.getElementById("places");
+        this.nameStation.innerHTML    = "Nom de la station : " + station.name;
+        this.addressStation.innerHTML = "Adresse : " + station.address;
 
-            this.nameStation.innerHTML = "Nom de la station : " + this.dataStationName;
-            this.adressStation.innerHTML = "Adresse : " + station.this.dataStationAdress;
-    
-            if (this.dataStationStatus === "OPEN") {
-                this.statusStation.innerHTML = "Status de la station: Ouverte";
-                this.bikes.innerHTML = "Vélo(s) disponible(s) : " + this.dataNumberBikes;
-                this.places.innerHTML = "Place(s) disponible(s) : " + this.dataNumberPlaces;
-            }
-            if (this.dataStationStatus === "CLOSED") {
-                this.statusStation.innerHTML = "Status de la station: Fermée";
-            }
-        });
-
+        if(statusStation === "CLOSED") {
+            this.statusStation.innerHTML = "Status de la station: Fermée";
+            this.bikes.innerHTML         = "";
+            this.places.innerHTML        = "";
+        } else {
+            this.statusStation.innerHTML = "Status de la station: Ouverte";
+            this.bikes.innerHTML         = "Vélo(s) disponible(s) : " + station.available_bikes;
+            this.places.innerHTML        = "Place(s) restante(s) disponible(s) : " + station.available_bike_stands;
+        }
     }
 
 }

@@ -15,10 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
         long: 4.850000
     });
 
-    // +++++ +++++ +++++ Détails Stations +++++ +++++ +++++
-
     // +++++ +++++ +++++ Formulaire réservation +++++ +++++ +++++
+    let reservation = new Reservation(document.getElementById("forms"));
 
     // +++++ +++++ +++++ Canvas Signature +++++ +++++ +++++
+    let canvas = new Canvas(document.getElementById("canvas"), "2d");
 
 });
