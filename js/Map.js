@@ -16,9 +16,10 @@ class Map {
      */
 
     constructor(container, zoomLevel, coordonnees){
-        this.container = container;
-        this.coordonnees = coordonnees;
-        this.zoomLevel = zoomLevel;
+        this.container       = container;
+        this.coordonnees     = coordonnees;
+        this.zoomLevel       = zoomLevel;
+        this.stationSelected = false;
 
         this.requetAjax = new Ajax("https://api.jcdecaux.com/vls/v1/stations?contract=lyon&apiKey=12eabafe239b1cf5964929dff783e2a53f297fc4", response => {
             this.stations = JSON.parse(response);
@@ -128,6 +129,13 @@ class Map {
             this.bikes.innerHTML         = "Vélo(s) disponible(s) : " + station.available_bikes;
             this.places.innerHTML        = "Place(s) restante(s) disponible(s) : " + station.available_bike_stands;
         }
+
+        this.stationSelected = true;
+
+        sessionStorage.setItem("stationName", station.name);
+        sessionStorage.setItem("stationAddress", station.address);
+        sessionStorage.setItem("stationSelect", this.stationSelected);
+
     }
 
 }
