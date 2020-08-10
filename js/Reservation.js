@@ -3,27 +3,41 @@
 class Reservation {
 
     constructor() {
-
         this.infosReservation = document.getElementById("infosReservation");
         this.lastName = document.getElementById("nom");
         this.firstName = document.getElementById("prenom");
 
+        this.checkDataUser();
         this.setReservationEvents();
     }
 
     // Evenements
     setReservationEvents() {
-
-        //recup données formulaire
+        // Reserver btn
         let btnReserver = document.getElementById("reserver");
 
         btnReserver.addEventListener("click", (evt) => {
             evt.preventDefault();
 
-            this.checkDataReservation();
+            this.checkDataRsv();
+/*            this.checkSign = sessionStorage.getItem("sign");
+            console.log("checkSign = " + this.checkSign);
+
+            if (this.lastName.value === "") {
+                alert("Merci de renseigner votre nom pour valider votre réservation.");
+            }else if(this.firstName.value === "") {
+                alert("Merci de renseigner votre prénom pour valider votre réservation.");
+            } else if(!this.checkSign === true) {
+                alert("Merci d'ajouter votre signature pour valider votre réservation");
+            }else {
+                this.setDataLocalUser();
+                this.setTimer();
+                this.addInfosReservation();
+                this.infosReservation.classList.remove("hidden");
+            } */
         });
 
-        //Cancel btn
+        // Cancel btn
         let cancelButton = document.getElementById("cancel");
 
         cancelButton.addEventListener("click", (evt) => {
@@ -34,26 +48,17 @@ class Reservation {
     }
 
     // vérification des données renseignées
-    checkDataReservation() {
+    checkDataUser() {
+//        this.getDataLocalUser();
+        this.storedLastName  = localStorage.getItem("lastname");
+        this.storedFirstName = localStorage.getItem("firstname");
+        console.log("Nom & prenoms = " + this.storedLastName + " " + this.storedFirstName);
 
-        this.stockedLastName  = this.getDataLocalStorage("lastname");
-        this.stockedFirstName = this.getDataLocalStorage("firstname");
-
-        if (this.stockedLastName !== undefined && this.stockedFirstName !== undefined) {
-            this.lastName.innerHTML  = this.stockedLastName;
-            this.firstName.innerHTML = this.stockedFirstName;
+        if (this.storedLastName !== undefined && this.storedFirstName !== undefined) {
+            this.lastName.innerText  = this.storedLastName;
+            this.firstName.innerText = this.storedFirstName;
         } else {
-            console.log("Alors enregistront les données")
-            if (this.lastName.value === "") {
-                alert("Merci de renseigner votre nom pour valider votre réservation.");
-            }else if(this.firstName.value === "") {
-                alert("Merci de renseigner votre prénom pour valider votre réservation.");
-            } else {
-                this.setDataLocalUser();
-                this.setTimer();
-
-                this.infosReservation.classList.remove("hidden");
-            }
+            return;
         }
     }
 
@@ -63,14 +68,18 @@ class Reservation {
         this.setDataLocalStorage("firstname", this.firstName.value);
     }
 
+/*    getDataLocalUser() {
+        this.storedLastName  = this.getDataLocalStorage("lastname");
+        this.storedFirstName = this.getDataLocalStorage("firstname");
+        console.log("Nom & prenoms = " + this.storedLastName + " " + this.storedFirstName);
+    } */
+
     setDataLocalStorage(setKeyLocal, setValueLocal) {
         localStorage.setItem(setKeyLocal, setValueLocal);
     }
 
-    getDataLocalStorage(keylocal) {
-        this.getKeyLocal = keylocal;
-
-        localStorage.getItem(this.getKeyLocal);
+    getDataLocalStorage(nameKeyLocal) {
+        localStorage.getItem(nameKeyLocal);
     }
 
     // methode stockage sessionStorage
@@ -98,7 +107,38 @@ class Reservation {
         this.getNameSession  = nameSession;
         this.getKeySession   = keySession;
 
-        this.getNameSession = sessionStorage.getItem(this.getKeySession);
+        this.getNameSession  = sessionStorage.getItem(this.getKeySession);
+    }
+
+    addInfosReservation() {
+        let rsvInfos = document.getElementById("rsvInfos");
+        let getNameStation    = sessionStorage.getItem("stationName");
+        let getAddressStation = sessionStorage.getItem("stationAddress");
+        console.log("getNameStation = " + getNameStation);
+        console.log("getAddressStation = " + getAddressStation);
+
+        rsvInfos.innerHTML = '<p>Votre réservation est en cours : <br> A la station ' + getNameStation + '<br> Située : ' + getAddressStation + '<br>Réserver par : ' + this.storedFirstName + ' ' + this.storedLastName;
+    }
+
+    // méthode de vérification des données pour valider la réservation.
+    checkDataRsv() {
+        this.checkSign          = sessionStorage.getItem("sign");
+        this.checkStationSelect = sessionStorage.getItem("stationSelect");
+
+        if(!this.checkStationSelect === true) {
+            alert("Merci de sélectionner une station de vélos valide"); 
+        }else if(this.lastName.value === "") {
+            alert("Merci de renseigner votre nom pour valider votre réservation.");
+        }else if(this.firstName.value === "") {
+            alert("Merci de renseigner votre prénom pour valider votre réservation.");
+        } else if(!this.checkSign === true) {
+            alert("Merci d'ajouter votre signature pour valider votre réservation");
+        }else {
+            this.setDataLocalUser();
+            this.setTimer();
+            this.addInfosReservation();
+            this.infosReservation.classList.remove("hidden");
+        }
     }
 
     // Timer reservation
