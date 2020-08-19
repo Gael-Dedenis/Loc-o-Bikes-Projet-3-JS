@@ -124,20 +124,15 @@
 
                     <fieldset>
                         <adress>
-                            <ol>
-                                <li id="nameStation"></li>
-                                <li id="addressStation"></li>
-                                <li id="statusStation"></li>
-                                <li id="bikes"></li>
-                                <li id="places"></li>
+                            <ol id="details">
                             </ol>
                         </adress>
-                        <input id="nom" type="text" name="nom" placeholder="Nom" required>
-                        <input id="prenom" type="text" name="prenom" placeholder="Prénom" required>
-                        <canvas id="canvas">
+                        <input id="prenom" class="hidden" type="text" name="prenom" placeholder="Prénom" required>
+                        <input id="nom" class="hidden" type="text" name="nom" placeholder="Nom" required>
+                        <canvas id="canvas" class="hidden">
                             <p>Désolé, votre navigateur ne supporte pas Canvas. Mettez-vous à jour</p>
                         </canvas>
-                        <input id="reserver" type="submit" value="Réserver">
+                        <input id="reserver" type="submit" value="Réserver" class="hidden">
                     </fieldset>
 
                 </form>
