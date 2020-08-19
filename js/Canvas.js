@@ -35,7 +35,7 @@ class Canvas {
     setOptionCanvas() {
         this.ctx.lineJoin  = "round";
         this.ctx.lineCap   = "round";
-        this.ctx.lineWidth = 1;
+        this.ctx.lineWidth = 2;
         this.ctx.strokeStyle = this.strokeStyleColor;
     }
 
@@ -68,7 +68,6 @@ class Canvas {
     // methode suite à la fin d'un click sur la souris
     mouseUp() {
         this.start = false;
-        this.sign  = true;
     }
 
     // methode appeler pour dessiner les positions "mouse"
@@ -76,6 +75,12 @@ class Canvas {
         if (!this.start) return;
         this.ctx.lineTo(event.offsetX, event.offsetY);
         this.ctx.stroke();
+
+        this.sign  = true;
+        sessionStorage.setItem("sign", this.sign);
+
+        let submit = document.getElementById("reserver");
+        submit.classList.remove("hidden");
     }
 
 // ----- ----- ----- Méthodes dédié au Touch ----- ----- -----
@@ -93,7 +98,6 @@ class Canvas {
     touchEnd() {
         console.log("Touch end !")
         this.start = false;
-        this.sign  = true;
     }
 
     // methode pour récuperer la position du "touch" par rapport au point d'origine [0, 0] = coin haut gauche 
@@ -114,5 +118,11 @@ class Canvas {
         this.touchLocation(event);
         this.ctx.lineTo(this.touchX, this.touchY);
         this.ctx.stroke();
+
+        this.sign  = true;
+        sessionStorage.setItem("sign", this.sign);
+
+        let submit = document.getElementById("reserver");
+        submit.classList.remove("hidden");
     }
 }
