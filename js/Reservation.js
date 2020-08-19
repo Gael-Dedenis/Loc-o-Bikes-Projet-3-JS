@@ -37,26 +37,15 @@ class Reservation {
         this.checkDataUser();
 
         this.lastName.onchange = () => {
-            if (this.firstName.value !== "") {
-                throw new Error("Merci de renseigner un Prénoms valide !");
-            }else {
-                if (this.lastName.value !== "") {
-
+            if (this.firstName.value === "") {
+                alert("Merci de renseigner un Prénom valide !");
+            } else {
+                if (this.lastName.value === "") {
+                    alert("Merci de renseigner un Nom valide !")
+                } else {
+                    this.Canvas.classList.remove("hidden");
                 }
-                this.Canvas.classList.remove("hidden");
             }
-        }
-    }
-
-    checkConditions() {
-        this.checkSign          = sessionStorage.getItem("sign");
-        this.checkStationSelect = sessionStorage.getItem("stationSelect");
-    }
-
-    checkDataInput() {
-        let regEx = /^([a-zA-Z_]){3, 12}$/ ;
-        if (this.firstName.value.match(regEx) || this.lastName.value.match(regEx)){
-
         }
     }
 
@@ -118,7 +107,7 @@ class Reservation {
         let getNameStation    = sessionStorage.getItem("stationName");
         let getAddressStation = sessionStorage.getItem("stationAddress");
 
-        rsvInfos.innerHTML = "<p>Votre réservation est en cours : <br> A la station " + getNameStation + "<br> Située : " + getAddressStation + "<br>Réserver par : " + this.storedFirstName + " " + this.storedLastName + ".</p>";
+        rsvInfos.innerHTML = "<p>Votre réservation est en cours : <br> A la station " + getNameStation + "<br> Située : " + getAddressStation + "<br>Réserver par : " + this.firstName.value + " " + this.lastName.value + ".</p>";
     }
 
     // méthode pour valider la réservation.
