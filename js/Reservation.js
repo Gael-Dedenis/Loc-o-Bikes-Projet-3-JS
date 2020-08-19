@@ -4,10 +4,13 @@ class Reservation {
 
     constructor() {
         this.infosReservation = document.getElementById("infosReservation");
-        this.lastName = document.getElementById("nom");
-        this.firstName = document.getElementById("prenom");
+        this.Canvas           = document.getElementById("canvas");
+        this.lastName         = document.getElementById("nom");
+        this.firstName        = document.getElementById("prenom");
+        this.storedLastName   = "";
+        this.storedFirstName  = "";
 
-        this.checkDataUser();
+        this.setUIReservationEvents();
         this.setReservationEvents();
     }
 
@@ -18,23 +21,7 @@ class Reservation {
 
         btnReserver.addEventListener("click", (evt) => {
             evt.preventDefault();
-
-            this.checkDataRsv();
-/*            this.checkSign = sessionStorage.getItem("sign");
-            console.log("checkSign = " + this.checkSign);
-
-            if (this.lastName.value === "") {
-                alert("Merci de renseigner votre nom pour valider votre réservation.");
-            }else if(this.firstName.value === "") {
-                alert("Merci de renseigner votre prénom pour valider votre réservation.");
-            } else if(!this.checkSign === true) {
-                alert("Merci d'ajouter votre signature pour valider votre réservation");
-            }else {
-                this.setDataLocalUser();
-                this.setTimer();
-                this.addInfosReservation();
-                this.infosReservation.classList.remove("hidden");
-            } */
+            this.setRsv();
         });
 
         // Cancel btn
@@ -42,23 +29,45 @@ class Reservation {
 
         cancelButton.addEventListener("click", (evt) => {
             evt.preventDefault();
-
             this.cancelReservation();
         });
     }
 
+    setUIReservationEvents() {
+        this.checkDataUser();
+
+        this.lastName.onchange = () => {
+            if (this.firstName.value !== "") {
+                throw new Error("Merci de renseigner un Prénoms valide !");
+            }else {
+                if (this.lastName.value !== "") {
+
+                }
+                this.Canvas.classList.remove("hidden");
+            }
+        }
+    }
+
+    checkConditions() {
+        this.checkSign          = sessionStorage.getItem("sign");
+        this.checkStationSelect = sessionStorage.getItem("stationSelect");
+    }
+
+    checkDataInput() {
+        let regEx = /^([a-zA-Z_]){3, 12}$/ ;
+        if (this.firstName.value.match(regEx) || this.lastName.value.match(regEx)){
+
+        }
+    }
+
     // vérification des données renseignées
     checkDataUser() {
-//        this.getDataLocalUser();
         this.storedLastName  = localStorage.getItem("lastname");
         this.storedFirstName = localStorage.getItem("firstname");
-        console.log("Nom & prenoms = " + this.storedLastName + " " + this.storedFirstName);
 
-        if (this.storedLastName !== undefined && this.storedFirstName !== undefined) {
-            this.lastName.innerText  = this.storedLastName;
-            this.firstName.innerText = this.storedFirstName;
-        } else {
-            return;
+        if (this.storedLastName !== "" && this.storedFirstName !== "") {
+            this.lastName.value  = this.storedLastName;
+            this.firstName.value = this.storedFirstName;
         }
     }
 
@@ -67,12 +76,6 @@ class Reservation {
         this.setDataLocalStorage("lastname", this.lastName.value);
         this.setDataLocalStorage("firstname", this.firstName.value);
     }
-
-/*    getDataLocalUser() {
-        this.storedLastName  = this.getDataLocalStorage("lastname");
-        this.storedFirstName = this.getDataLocalStorage("firstname");
-        console.log("Nom & prenoms = " + this.storedLastName + " " + this.storedFirstName);
-    } */
 
     setDataLocalStorage(setKeyLocal, setValueLocal) {
         localStorage.setItem(setKeyLocal, setValueLocal);
@@ -114,31 +117,16 @@ class Reservation {
         let rsvInfos = document.getElementById("rsvInfos");
         let getNameStation    = sessionStorage.getItem("stationName");
         let getAddressStation = sessionStorage.getItem("stationAddress");
-        console.log("getNameStation = " + getNameStation);
-        console.log("getAddressStation = " + getAddressStation);
 
-        rsvInfos.innerHTML = '<p>Votre réservation est en cours : <br> A la station ' + getNameStation + '<br> Située : ' + getAddressStation + '<br>Réserver par : ' + this.storedFirstName + ' ' + this.storedLastName;
+        rsvInfos.innerHTML = "<p>Votre réservation est en cours : <br> A la station " + getNameStation + "<br> Située : " + getAddressStation + "<br>Réserver par : " + this.storedFirstName + " " + this.storedLastName + ".</p>";
     }
 
-    // méthode de vérification des données pour valider la réservation.
-    checkDataRsv() {
-        this.checkSign          = sessionStorage.getItem("sign");
-        this.checkStationSelect = sessionStorage.getItem("stationSelect");
-
-        if(!this.checkStationSelect === true) {
-            alert("Merci de sélectionner une station de vélos valide"); 
-        }else if(this.lastName.value === "") {
-            alert("Merci de renseigner votre nom pour valider votre réservation.");
-        }else if(this.firstName.value === "") {
-            alert("Merci de renseigner votre prénom pour valider votre réservation.");
-        } else if(!this.checkSign === true) {
-            alert("Merci d'ajouter votre signature pour valider votre réservation");
-        }else {
-            this.setDataLocalUser();
-            this.setTimer();
-            this.addInfosReservation();
-            this.infosReservation.classList.remove("hidden");
-        }
+    // méthode pour valider la réservation.
+    setRsv() {
+        this.setDataLocalUser();
+        this.setTimer();
+        this.addInfosReservation();
+        this.infosReservation.classList.remove("hidden");
     }
 
     // Timer reservation
