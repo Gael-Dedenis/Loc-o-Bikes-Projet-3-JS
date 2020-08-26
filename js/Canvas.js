@@ -1,100 +1,136 @@
 "use strict";
 
 class Canvas {
+    /**
+     * @param {string} container nom du containeur du Canvas 
+     * @param {string} contextCanvas context rechercher sur le Canvas
+     * @param {string} color couleur à utiliser pour tracer les points
+     */
+    constructor (container, contextCanvas, color) {
+        this.container        = container;
+        this.contextCanvas    = contextCanvas;
+        this.strokeStyleColor = color;
 
-    constructor (container, ctxCanvas) {
-        this.container    = container;
-        this.ctxCanvas    = ctxCanvas;
-        this.startDrawing = false;
-        this.sign         = false;
+        this.submit = document.getElementById("reserver");
+
+        this.start  = false;
+        this.touchX = 0;
+        this.touchY = 0;
+        this.sign   = false;
 
         this.initCanvas();
     }
 
-    //Init Canvas
+    // initialisation du Canvas
     initCanvas() {
         this.getCanvasContext();
-        this.setPointer();
-        this.listenCanvasEventsMouse();
-        this.listenCanvasEventsTouch();
+        this.setOptionCanvas();
+        this.setListeners();
     }
 
-    // Events Canvas Souris
-    listenCanvasEventsMouse() {
-        this.container.addEventListener("mousedown", (evnt) => {
-            this.startDrawing = true;
-            [this.X, this.Y] = [evnt.offsetX, evnt.offsetY];
-        });
-
-        this.container.addEventListener("mousemove", (evnt) => {
-            this.paintInCanvas(evnt.offsetX, evnt.offsetY);
-        });
-
-        this.container.addEventListener("mouseup", () => {
-            this.startDrawing = false;
-            this.sign         = true;
-            sessionStorage.setItem("sign", this.sign);
-        });
-
-        this.container.addEventListener("mouseout", () => {
-            this.startDrawing = false;
-        });
-    }
-
-    // Events Canvas Mobile
-    listenCanvasEventsTouch() {
-
-        this.container.addEventListener("touchstart", (evnt) => {
-            this.startDrawing = true;
-            this.getTouchPosition(evnt);
-            [this.X, this.Y] = [this.touchX, this.touchY];
-        });
-
-        this.container.addEventListener("touchmove", (evnt) => {
-            evnt.preventDefault();
-            this.paintInCanvas(this.touchX, this.touchY);
-        });
-
-        this.container.addEventListener("touchend", () => {
-            this.startDrawing = false;
-            this.sign         = true;
-            sessionStorage.setItem("sign", this.sign);
-        });
-
-        this.container.addEventListener("touchOut", () => {
-            this.startDrawing = false;
-        });
-    }
-
-    getTouchPosition(evnt) {
-        let canvasAttributes = evnt.target.getBoundingClientRect();
-
-        this.touchX = evnt.targetTouches[0].clientX - canvasAttributes.left;
-        this.touchY = evnt.targetTouches[0].clientY - canvasAttributes.top;
-    }
-
-    // methode get context
+    // récupération du context sur le Canvas
     getCanvasContext() {
-        this.ctx = this.container.getContext(this.ctxCanvas);
+        this.ctx = this.container.getContext(this.contextCanvas);
     }
 
-    // definition du pointeur
-    setPointer() {
+    // réglage des options du Canvas
+    setOptionCanvas() {
         this.ctx.lineJoin  = "round";
         this.ctx.lineCap   = "round";
-        this.ctx.lineWidth = 3;
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeStyle = this.strokeStyleColor;
     }
 
-    paintInCanvas(X, Y) {
-        if (!this.startDrawing) {
-            return;
-        }
-        this.ctx.strokeStyle = "#000000";
+    // écouteurs d'événements
+    setListeners() {
+
+        // écoute d'événements de type "souris"
+        this.container.addEventListener("mousedown", this.mouseDown.bind(this));
+        this.container.addEventListener("mouseup", this.mouseUp.bind(this));
+        this.container.addEventListener("mousemove", this.mouseDrawing.bind(this));
+        this.container.addEventListener("mouseout", this.mouseUp.bind(this));
+
+        // écoute d'événements de type "touch"
+        this.container.addEventListener("touchstart", this.touchStart.bind(this));
+        this.container.addEventListener("touchend", this.touchEnd.bind(this));
+        this.container.addEventListener("touchmove", this.touchDrawing.bind(this));
+        this.container.addEventListener("touchcancel", this.touchEnd.bind(this));
+
+        // écoute du bouton Réserver
+        this.submit.addEventListener("click", this.clearCanvas.bind(this));
+
+    }
+
+    // Reset du canvas
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.container.width, this.container.height);
+        this.sign = false;
+
+        sessionStorage.setItem("sign", this.sign);
+    }
+
+// ----- ----- ----- Méthodes dédié à la souris ----- ----- -----
+
+    // methode suite au début d'un click sur la souris
+    mouseDown(event) {
+        this.start = true;
+
         this.ctx.beginPath();
-        this.ctx.moveTo(this.X, this.Y);
-        this.ctx.lineTo(X, Y);
-        this.ctx.stroke();
-        [this.X, this.Y] = [X, Y];
+        this.ctx.moveTo(event.offsetX, event.offsetY);
     }
 
+    // methode suite à la fin d'un click sur la souris
+    mouseUp() {
+        this.start = false;
+    }
+
+    // methode appeler pour dessiner les positions "mouse"
+    mouseDrawing(event) {
+        if (!this.start) return;
+        this.ctx.lineTo(event.offsetX, event.offsetY);
+        this.ctx.stroke();
+
+        this.sign  = true;
+        sessionStorage.setItem("sign", this.sign);
+
+        let submit = document.getElementById("reserver");
+        submit.classList.remove("hidden");
+    }
+
+// ----- ----- ----- Méthodes dédié au Touch ----- ----- -----
+
+    // methode suite au début d'un "touch"
+    touchStart(event) {
+        this.start = true;
+        this.ctx.beginPath();
+        this.touchLocation(event);
+        this.ctx.moveTo(this.touchX, this.touchY);
+    }
+
+    // methode suite à la fin d'un "touch"
+    touchEnd() {
+        this.start = false;
+    }
+
+    // methode pour récuperer la position du "touch" par rapport au point d'origine [0, 0] = coin haut gauche 
+    touchLocation(event) {
+        let position = event.target.getBoundingClientRect();
+
+        this.touchX = event.targetTouches[0].clientX - position.left;
+        this.touchY = event.targetTouches[0].clientY - position.top;
+    }
+
+    // methode appeler pour dessiner les positions "touch"
+    touchDrawing(event) {
+        event.preventDefault();
+        if (!this.start) return;
+        this.touchLocation(event);
+        this.ctx.lineTo(this.touchX, this.touchY);
+        this.ctx.stroke();
+
+        this.sign  = true;
+        sessionStorage.setItem("sign", this.sign);
+
+        this.submit.classList.remove("hidden");
+    }
 }

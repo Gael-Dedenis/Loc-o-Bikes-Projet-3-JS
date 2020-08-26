@@ -80,12 +80,12 @@ class Map {
             this.setPopup(station);
         }
 
-        else if (station.available_bikes === 0 && station.available_bike_stands >= 1) {
+        else if (station.available_bikes === 0) {
             this.createMarker ({position : station.position, icon : this.redIcon});
             this.setPopup(station);
         }
 
-        else if (station.available_bike_stands > station.available_bikes &&  station.available_bikes > 1) {
+        else if (station.available_bike_stands > station.available_bikes && station.available_bikes > 0) {
             this.createMarker ({position : station.position, icon : this.orangeIcon});
             this.setPopup(station);
         }
@@ -109,33 +109,56 @@ class Map {
     }
 
     getDetailsStation(station) {
-        this.nameStation    = document.getElementById("nameStation");
-        this.addressStation = document.getElementById("addressStation");
-        this.statusStation  = document.getElementById("statusStation");
-        this.bikes          = document.getElementById("bikes");
-        this.places         = document.getElementById("places");
-
-        let statusStation = station.status;
-
-        this.nameStation.innerHTML    = "Nom de la station : " + station.name;
-        this.addressStation.innerHTML = "Adresse : " + station.address;
+        let stationSelect  = document.getElementById("details");
+        let statusStation  = station.status;
+        let h2             = document.getElementById("h2-reservation");
+        let labelFirstName = document.getElementById("label-prenom");
+        let labelLastName  = document.getElementById("label-nom");
+        let lastName       = document.getElementById("nom");
+        let firstName      = document.getElementById("prenom");
+        let canvas         = document.getElementById("canvas");
 
         if(statusStation === "CLOSED") {
-            this.statusStation.innerHTML = "Status de la station: Fermée";
-            this.bikes.innerHTML         = "";
-            this.places.innerHTML        = "";
-        } else {
-            this.statusStation.innerHTML = "Status de la station: Ouverte";
-            this.bikes.innerHTML         = "Vélo(s) disponible(s) : " + station.available_bikes;
-            this.places.innerHTML        = "Place(s) restante(s) disponible(s) : " + station.available_bike_stands;
-        }
+            stationSelect.innerHTML = "<li>Status de la station: Fermée.</li> <li>Nom de la station : " + station.name + ".</li> <li> Merci de sélectionner une station ouverte.</li>";
 
-        this.stationSelected = true;
+            h2.classList.add("hidden");
+            labelFirstName.classList.add("hidden");
+            labelLastName.classList.add("hidden");
+            lastName.classList.add("hidden");
+            firstName.classList.add("hidden");
+
+            this.stationSelected = false;
+            sessionStorage.setItem("stationSelect", this.stationSelected);
+
+        } else if(station.available_bikes === 0) {
+            stationSelect.innerHTML = "<li>Status de la station: Ouverte.</li> <li>Nom de la station : " + station.name + ".</li> <li>Adresse : " + station.address + "</li> <li>Vélo(s) disponible(s) : " + station.available_bikes + ".</li> <li>Place(s) restante(s) disponible(s) : " + station.available_bike_stands + ".</li> <li> Merci de sélectionner une station ouverte avec des vélos disponniblent.</li>";
+
+            h2.classList.add("hidden");
+            labelFirstName.classList.add("hidden");
+            labelLastName.classList.add("hidden");
+            lastName.classList.add("hidden");
+            firstName.classList.add("hidden");
+
+            this.stationSelected = false;
+            sessionStorage.setItem("stationSelect", this.stationSelected);
+        } else {
+            stationSelect.innerHTML = "<li>Status de la station: Ouverte.</li> <li>Nom de la station : " + station.name + ".</li> <li>Adresse : " + station.address + ".</li> <li>Vélo(s) disponible(s) : " + station.available_bikes + ".</li> <li>Place(s) restante(s) disponible(s) : " + station.available_bike_stands + ".</li>";
+
+            this.stationSelected = true;
+            sessionStorage.setItem("stationSelect", this.stationSelected);
+
+            h2.classList.remove("hidden");
+            labelFirstName.classList.remove("hidden");
+            labelLastName.classList.remove("hidden");
+            lastName.classList.remove("hidden");
+            firstName.classList.remove("hidden");
+
+            if (lastName.value != "" && firstName.value != "") {
+                canvas.classList.remove("hidden");
+            }
+        }
 
         sessionStorage.setItem("stationName", station.name);
         sessionStorage.setItem("stationAddress", station.address);
-        sessionStorage.setItem("stationSelect", this.stationSelected);
-
     }
-
 }

@@ -19,6 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let reservation = new Reservation(document.getElementById("forms"));
 
     // +++++ +++++ +++++ Canvas Signature +++++ +++++ +++++
-    let canvas = new Canvas(document.getElementById("canvas"), "2d");
+    let canvas = new Canvas(document.getElementById("canvas"), "2d", "#000000");
 
 });

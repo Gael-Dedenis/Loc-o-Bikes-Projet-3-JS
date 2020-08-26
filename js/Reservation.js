@@ -4,10 +4,18 @@ class Reservation {
 
     constructor() {
         this.infosReservation = document.getElementById("infosReservation");
-        this.lastName = document.getElementById("nom");
-        this.firstName = document.getElementById("prenom");
+        this.Canvas           = document.getElementById("canvas");
+        this.lastName         = document.getElementById("nom");
+        this.firstName        = document.getElementById("prenom");
+        this.minute           = document.getElementById("mins");
+        this.seconde          = document.getElementById("sec");
+        this.storedLastName   = "";
+        this.storedFirstName  = "";
+        this.timer            = "";
+        this.timeMin          = 20;
+        this.timeSec          = 0;
 
-        this.checkDataUser();
+        this.setUIReservationEvents();
         this.setReservationEvents();
     }
 
@@ -19,22 +27,14 @@ class Reservation {
         btnReserver.addEventListener("click", (evt) => {
             evt.preventDefault();
 
-            this.checkDataRsv();
-/*            this.checkSign = sessionStorage.getItem("sign");
-            console.log("checkSign = " + this.checkSign);
+            let sign        = sessionStorage.getItem("sign");
 
-            if (this.lastName.value === "") {
-                alert("Merci de renseigner votre nom pour valider votre réservation.");
-            }else if(this.firstName.value === "") {
-                alert("Merci de renseigner votre prénom pour valider votre réservation.");
-            } else if(!this.checkSign === true) {
-                alert("Merci d'ajouter votre signature pour valider votre réservation");
-            }else {
-                this.setDataLocalUser();
-                this.setTimer();
-                this.addInfosReservation();
-                this.infosReservation.classList.remove("hidden");
-            } */
+            if (sign === "true") {
+                this.setRsv();
+                sign = false;
+
+                sessionStorage.setItem("sign", sign);
+            }
         });
 
         // Cancel btn
@@ -42,23 +42,34 @@ class Reservation {
 
         cancelButton.addEventListener("click", (evt) => {
             evt.preventDefault();
-
             this.cancelReservation();
         });
     }
 
+    setUIReservationEvents() {
+        this.checkDataUser();
+
+        this.lastName.onchange = () => {
+            if (this.firstName.value === "") {
+                alert("Merci de renseigner un Prénom valide !");
+            } else {
+                if (this.lastName.value === "") {
+                    alert("Merci de renseigner un Nom valide !")
+                } else {
+                    this.Canvas.classList.remove("hidden");
+                }
+            }
+        }
+    }
+
     // vérification des données renseignées
     checkDataUser() {
-//        this.getDataLocalUser();
         this.storedLastName  = localStorage.getItem("lastname");
         this.storedFirstName = localStorage.getItem("firstname");
-        console.log("Nom & prenoms = " + this.storedLastName + " " + this.storedFirstName);
 
-        if (this.storedLastName !== undefined && this.storedFirstName !== undefined) {
-            this.lastName.innerText  = this.storedLastName;
-            this.firstName.innerText = this.storedFirstName;
-        } else {
-            return;
+        if (this.storedLastName !== "" && this.storedFirstName !== "") {
+            this.lastName.value  = this.storedLastName;
+            this.firstName.value = this.storedFirstName;
         }
     }
 
@@ -68,18 +79,8 @@ class Reservation {
         this.setDataLocalStorage("firstname", this.firstName.value);
     }
 
-/*    getDataLocalUser() {
-        this.storedLastName  = this.getDataLocalStorage("lastname");
-        this.storedFirstName = this.getDataLocalStorage("firstname");
-        console.log("Nom & prenoms = " + this.storedLastName + " " + this.storedFirstName);
-    } */
-
     setDataLocalStorage(setKeyLocal, setValueLocal) {
         localStorage.setItem(setKeyLocal, setValueLocal);
-    }
-
-    getDataLocalStorage(nameKeyLocal) {
-        localStorage.getItem(nameKeyLocal);
     }
 
     // methode stockage sessionStorage
@@ -103,54 +104,28 @@ class Reservation {
         sessionStorage.setItem(this.setKeySession, this.setValueSession);
     }
 
-    getDataSessionStorage(nameSession, keySession) {
-        this.getNameSession  = nameSession;
-        this.getKeySession   = keySession;
-
-        this.getNameSession  = sessionStorage.getItem(this.getKeySession);
-    }
-
     addInfosReservation() {
         let rsvInfos = document.getElementById("rsvInfos");
         let getNameStation    = sessionStorage.getItem("stationName");
         let getAddressStation = sessionStorage.getItem("stationAddress");
-        console.log("getNameStation = " + getNameStation);
-        console.log("getAddressStation = " + getAddressStation);
 
-        rsvInfos.innerHTML = '<p>Votre réservation est en cours : <br> A la station ' + getNameStation + '<br> Située : ' + getAddressStation + '<br>Réserver par : ' + this.storedFirstName + ' ' + this.storedLastName;
+        rsvInfos.innerHTML = "<h3>Votre réservation est en cours</h3> <p> A la station " + getNameStation + "<br> Située : " + getAddressStation + "<br>Réserver par : " + this.firstName.value + " " + this.lastName.value + ".</p>";
     }
 
-    // méthode de vérification des données pour valider la réservation.
-    checkDataRsv() {
-        this.checkSign          = sessionStorage.getItem("sign");
-        this.checkStationSelect = sessionStorage.getItem("stationSelect");
+    // méthode pour valider la réservation.
+    setRsv() {
+        this.timeSec = 0;
+        this.timeMin = 20;
+        clearInterval(this.timer);
 
-        if(!this.checkStationSelect === true) {
-            alert("Merci de sélectionner une station de vélos valide"); 
-        }else if(this.lastName.value === "") {
-            alert("Merci de renseigner votre nom pour valider votre réservation.");
-        }else if(this.firstName.value === "") {
-            alert("Merci de renseigner votre prénom pour valider votre réservation.");
-        } else if(!this.checkSign === true) {
-            alert("Merci d'ajouter votre signature pour valider votre réservation");
-        }else {
-            this.setDataLocalUser();
-            this.setTimer();
-            this.addInfosReservation();
-            this.infosReservation.classList.remove("hidden");
-        }
+        this.setDataLocalUser();
+        this.setTimer();
+        this.addInfosReservation();
+        this.infosReservation.classList.remove("hidden");
     }
 
     // Timer reservation
     setTimer() {
-        this.timer   = "";
-
-        this.minute  = document.getElementById("mins");
-        this.seconde = document.getElementById("sec");
-
-        this.timeMin = 20;
-        this.timeSec = 0;
-
         this.timer = setInterval(this.countDown.bind(this), 1000);
     }
 
@@ -158,23 +133,35 @@ class Reservation {
         sessionStorage.setItem("timeMin",this.timeMin);
         sessionStorage.setItem("timeSec",this.timeSec);
 
-        this.timeSec--;
-        this.seconde.innerHTML = this.timeSec;
-
         if (this.timeSec <= 0) {
-            this.timeSec = 59;
+            this.timeSec = 60;
             this.timeMin--;
             this.minute.innerHTML = this.timeMin;
         }
 
-        if (this.timeMin < 0) {
+        if (this.timeMin <= 0 && this.timeSec <= 0) {
             clearInterval(this.timer);
+
+            this.timeSec = 60;
+            this.timeMin = 20;
+
+            sessionStorage.setItem("timeMin",this.timeMin);
+            sessionStorage.setItem("timeSec",this.timeSec);
         }
+
+        this.timeSec--;
+        this.seconde.innerHTML = this.timeSec;
     }
 
     //Cancel reservation
     cancelReservation () {
         clearInterval(this.timer);
+
+        this.timeSec = 60;
+        this.timeMin = 20;
+        sessionStorage.setItem("timeMin",this.timeMin);
+        sessionStorage.setItem("timeSec",this.timeSec);
+
         this.infosReservation.classList.add("hidden");
     }
 
