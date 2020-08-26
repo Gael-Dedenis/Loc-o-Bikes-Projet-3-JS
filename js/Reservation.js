@@ -7,8 +7,13 @@ class Reservation {
         this.Canvas           = document.getElementById("canvas");
         this.lastName         = document.getElementById("nom");
         this.firstName        = document.getElementById("prenom");
+        this.minute           = document.getElementById("mins");
+        this.seconde          = document.getElementById("sec");
         this.storedLastName   = "";
         this.storedFirstName  = "";
+        this.timer            = "";
+        this.timeMin          = 20;
+        this.timeSec          = 0;
 
         this.setUIReservationEvents();
         this.setReservationEvents();
@@ -21,7 +26,15 @@ class Reservation {
 
         btnReserver.addEventListener("click", (evt) => {
             evt.preventDefault();
-            this.setRsv();
+
+            let sign        = sessionStorage.getItem("sign");
+
+            if (sign === "true") {
+                this.setRsv();
+                sign = false;
+
+                sessionStorage.setItem("sign", sign);
+            }
         });
 
         // Cancel btn
@@ -70,10 +83,6 @@ class Reservation {
         localStorage.setItem(setKeyLocal, setValueLocal);
     }
 
-    getDataLocalStorage(nameKeyLocal) {
-        localStorage.getItem(nameKeyLocal);
-    }
-
     // methode stockage sessionStorage
     checkDataSessionStorage(keySession, valueSession) {
 
@@ -95,23 +104,20 @@ class Reservation {
         sessionStorage.setItem(this.setKeySession, this.setValueSession);
     }
 
-    getDataSessionStorage(nameSession, keySession) {
-        this.getNameSession  = nameSession;
-        this.getKeySession   = keySession;
-
-        this.getNameSession  = sessionStorage.getItem(this.getKeySession);
-    }
-
     addInfosReservation() {
         let rsvInfos = document.getElementById("rsvInfos");
         let getNameStation    = sessionStorage.getItem("stationName");
         let getAddressStation = sessionStorage.getItem("stationAddress");
 
-        rsvInfos.innerHTML = "<p>Votre réservation est en cours : <br> A la station " + getNameStation + "<br> Située : " + getAddressStation + "<br>Réserver par : " + this.firstName.value + " " + this.lastName.value + ".</p>";
+        rsvInfos.innerHTML = "<h3>Votre réservation est en cours</h3> <p> A la station " + getNameStation + "<br> Située : " + getAddressStation + "<br>Réserver par : " + this.firstName.value + " " + this.lastName.value + ".</p>";
     }
 
     // méthode pour valider la réservation.
     setRsv() {
+        this.timeSec = 0;
+        this.timeMin = 20;
+        clearInterval(this.timer);
+
         this.setDataLocalUser();
         this.setTimer();
         this.addInfosReservation();
@@ -120,14 +126,6 @@ class Reservation {
 
     // Timer reservation
     setTimer() {
-        this.timer   = "";
-
-        this.minute  = document.getElementById("mins");
-        this.seconde = document.getElementById("sec");
-
-        this.timeMin = 20;
-        this.timeSec = 0;
-
         this.timer = setInterval(this.countDown.bind(this), 1000);
     }
 
@@ -135,23 +133,35 @@ class Reservation {
         sessionStorage.setItem("timeMin",this.timeMin);
         sessionStorage.setItem("timeSec",this.timeSec);
 
-        this.timeSec--;
-        this.seconde.innerHTML = this.timeSec;
-
         if (this.timeSec <= 0) {
-            this.timeSec = 59;
+            this.timeSec = 60;
             this.timeMin--;
             this.minute.innerHTML = this.timeMin;
         }
 
-        if (this.timeMin < 0) {
+        if (this.timeMin <= 0 && this.timeSec <= 0) {
             clearInterval(this.timer);
+
+            this.timeSec = 60;
+            this.timeMin = 20;
+
+            sessionStorage.setItem("timeMin",this.timeMin);
+            sessionStorage.setItem("timeSec",this.timeSec);
         }
+
+        this.timeSec--;
+        this.seconde.innerHTML = this.timeSec;
     }
 
     //Cancel reservation
     cancelReservation () {
         clearInterval(this.timer);
+
+        this.timeSec = 60;
+        this.timeMin = 20;
+        sessionStorage.setItem("timeMin",this.timeMin);
+        sessionStorage.setItem("timeSec",this.timeSec);
+
         this.infosReservation.classList.add("hidden");
     }
 
