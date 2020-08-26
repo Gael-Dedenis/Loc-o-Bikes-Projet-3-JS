@@ -109,15 +109,21 @@ class Map {
     }
 
     getDetailsStation(station) {
-        let stationSelect = document.getElementById("details");
-        let statusStation = station.status;
-        let lastName      = document.getElementById("nom");
-        let firstName     = document.getElementById("prenom");
-        let canvas        = document.getElementById("canvas");
+        let stationSelect  = document.getElementById("details");
+        let statusStation  = station.status;
+        let h2             = document.getElementById("h2-reservation");
+        let labelFirstName = document.getElementById("label-prenom");
+        let labelLastName  = document.getElementById("label-nom");
+        let lastName       = document.getElementById("nom");
+        let firstName      = document.getElementById("prenom");
+        let canvas         = document.getElementById("canvas");
 
         if(statusStation === "CLOSED") {
             stationSelect.innerHTML = "<li>Status de la station: Fermée.</li> <li>Nom de la station : " + station.name + ".</li> <li> Merci de sélectionner une station ouverte.</li>";
 
+            h2.classList.add("hidden");
+            labelFirstName.classList.add("hidden");
+            labelLastName.classList.add("hidden");
             lastName.classList.add("hidden");
             firstName.classList.add("hidden");
 
@@ -127,6 +133,9 @@ class Map {
         } else if(station.available_bikes === 0) {
             stationSelect.innerHTML = "<li>Status de la station: Ouverte.</li> <li>Nom de la station : " + station.name + ".</li> <li>Adresse : " + station.address + "</li> <li>Vélo(s) disponible(s) : " + station.available_bikes + ".</li> <li>Place(s) restante(s) disponible(s) : " + station.available_bike_stands + ".</li> <li> Merci de sélectionner une station ouverte avec des vélos disponniblent.</li>";
 
+            h2.classList.add("hidden");
+            labelFirstName.classList.add("hidden");
+            labelLastName.classList.add("hidden");
             lastName.classList.add("hidden");
             firstName.classList.add("hidden");
 
@@ -138,6 +147,9 @@ class Map {
             this.stationSelected = true;
             sessionStorage.setItem("stationSelect", this.stationSelected);
 
+            h2.classList.remove("hidden");
+            labelFirstName.classList.remove("hidden");
+            labelLastName.classList.remove("hidden");
             lastName.classList.remove("hidden");
             firstName.classList.remove("hidden");
 
