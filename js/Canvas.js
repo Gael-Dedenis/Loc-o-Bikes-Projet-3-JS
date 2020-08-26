@@ -11,6 +11,8 @@ class Canvas {
         this.contextCanvas    = contextCanvas;
         this.strokeStyleColor = color;
 
+        this.submit = document.getElementById("reserver");
+
         this.start  = false;
         this.touchX = 0;
         this.touchY = 0;
@@ -41,6 +43,7 @@ class Canvas {
 
     // écouteurs d'événements
     setListeners() {
+
         // écoute d'événements de type "souris"
         this.container.addEventListener("mousedown", this.mouseDown.bind(this));
         this.container.addEventListener("mouseup", this.mouseUp.bind(this));
@@ -53,6 +56,17 @@ class Canvas {
         this.container.addEventListener("touchmove", this.touchDrawing.bind(this));
         this.container.addEventListener("touchcancel", this.touchEnd.bind(this));
 
+        // écoute du bouton Réserver
+        this.submit.addEventListener("click", this.clearCanvas.bind(this));
+
+    }
+
+    // Reset du canvas
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.container.width, this.container.height);
+        this.sign = false;
+
+        sessionStorage.setItem("sign", this.sign);
     }
 
 // ----- ----- ----- Méthodes dédié à la souris ----- ----- -----
@@ -87,7 +101,6 @@ class Canvas {
 
     // methode suite au début d'un "touch"
     touchStart(event) {
-        console.log("Touch start !");
         this.start = true;
         this.ctx.beginPath();
         this.touchLocation(event);
@@ -96,23 +109,19 @@ class Canvas {
 
     // methode suite à la fin d'un "touch"
     touchEnd() {
-        console.log("Touch end !")
         this.start = false;
     }
 
     // methode pour récuperer la position du "touch" par rapport au point d'origine [0, 0] = coin haut gauche 
     touchLocation(event) {
-        console.log("In touchPosition !");
         let position = event.target.getBoundingClientRect();
 
         this.touchX = event.targetTouches[0].clientX - position.left;
         this.touchY = event.targetTouches[0].clientY - position.top;
-        console.log("X = " + this.touchX + " Y = " + this.touchY);
     }
 
     // methode appeler pour dessiner les positions "touch"
     touchDrawing(event) {
-        console.log("Draw now ! :D");
         event.preventDefault();
         if (!this.start) return;
         this.touchLocation(event);
@@ -122,7 +131,6 @@ class Canvas {
         this.sign  = true;
         sessionStorage.setItem("sign", this.sign);
 
-        let submit = document.getElementById("reserver");
-        submit.classList.remove("hidden");
+        this.submit.classList.remove("hidden");
     }
 }
