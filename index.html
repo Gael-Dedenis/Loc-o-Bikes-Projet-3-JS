@@ -31,11 +31,12 @@
         <meta name="twitter:creator" content="Gael Dedenis">
 
     <!-- ............... Css ................. -->
-        <link rel="stylesheet" href="css/style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
             integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
             crossorigin="">
+        <link rel="stylesheet" href="css/style.css">
 
     </head>
 
@@ -45,7 +46,11 @@
 
             <header class="flex__column">
 
-                <h1>Loc'o'Bike</h1>
+                <div class="head">
+                    <img class="logo__svg" src="img/logo_locoBike.svg" alt="Loco'Bikes logo">
+                    <h1 class="typo">Loc'o'Bike</h1>
+                </div>
+
                 <p>
                     Retrouvez toutes les stations de vélos disponnibles sur Lyon. Profitez des bienfaits du déplacement à vélo pour un petit prix!
                 </p>
@@ -55,7 +60,7 @@
                 <div id="carousel--container" class="flex__column">
 
                         <figure class="border flex__column">
-                            <img src="" srcset="" alt="On sélectionne une station sur la carte parmie celles disponnibles.">
+                            <img src="img/diapos/diapo_1.jpg" alt="On sélectionne une station sur la carte parmie celles disponnibles.">
                             <figcaption>
                                 <span> 1 </span>
                                 Sélectionnez une station de votre choix.
@@ -63,7 +68,7 @@
                         </figure>
 
                         <figure class="border flex__column">
-                            <img src="" srcset="" alt="On voit les détails de la station sélectionnée précédement et on remplie les champs nécéssaires, puis on clique sur le bouton pour accepter les conditions d'utilisations et 'Réserver'.">
+                            <img src="img/diapos/diapo_2.jpg" alt="On voit les détails de la station sélectionnée précédement et on remplie les champs nécéssaires, puis on clique sur le bouton pour accepter les conditions d'utilisations et 'Réserver'.">
                             <figcaption>
                                 <span> 2 </span>
                                 Regardez les détails de la station.
@@ -71,7 +76,7 @@
                         </figure>
 
                         <figure class="border flex__column">
-                            <img src="" srcset="" alt="On signe dans l'encadrement pour valider la réservation.">
+                            <img src="img/diapos/diapo_3.jpg" alt="On signe dans l'encadrement pour valider la réservation.">
                             <figcaption>
                                 <span> 3 </span>
                                 Remplissez les champs pour réserver.
@@ -79,7 +84,7 @@
                         </figure>
 
                         <figure class="border flex__column">
-                            <img src="" srcset="" alt="On clique sur le bouton annuler pour annuler la réservation en cours.">
+                            <img src="img/diapos/diapo_4.jpg" alt="On clique sur le bouton annuler pour annuler la réservation en cours.">
                             <figcaption>
                                 <span> 4 </span>
                                 Pour annuler sa réservation en cours.
@@ -104,7 +109,6 @@
                         <li>
                             <i id="controls__next" class="fas fa-arrow-right"></i>
                         </li>
-                        </li>
 
                     </ul>
 
@@ -112,39 +116,52 @@
 
 <!-- ................................... Section carte + réservation ................................ -->
 
-            <section>
+            <section class="flex__column">
 
-                <figure id="leaflet--map" class="bloc">
+                <figure id="leaflet--map" class="bloc border">
                 <!-- Map -->
                 </figure>
 
-                <form id="forms" method="" action="">
+                <form id="forms" class="flex__column">
 
-                    <h2>Détails de la station</h2>
+                    <h2 id="h2-reservation" class="hidden typo">Détails de la station</h2>
 
                     <fieldset>
-                        <adress>
+                        <address>
                             <ol id="details">
                             </ol>
-                        </adress>
-                        <input id="prenom" class="hidden" type="text" name="prenom" placeholder="Prénom" required>
-                        <input id="nom" class="hidden" type="text" name="nom" placeholder="Nom" required>
-                        <canvas id="canvas" class="hidden">
-                            <p>Désolé, votre navigateur ne supporte pas Canvas. Mettez-vous à jour</p>
-                        </canvas>
-                        <input id="reserver" type="submit" value="Réserver" class="hidden">
+                        </address>
+                        
+                        <div class="flex__column input">
+                            <label id="label-prenom" for="prenom" class="hidden">Votre prénom :</label>
+                            <input id="prenom" class="hidden border" type="text" name="prenom" placeholder="Prénom" required>
+                        </div>
+                        
+                        <div class="flex__column input">
+                            <label id="label-nom" for="nom" class="hidden">Votre nom :</label>
+                            <input id="nom" class="hidden border" type="text" name="nom" placeholder="Nom" required>
+                        </div>
+
+                        <figure class="container__canvas flex__row">
+                            <canvas id="canvas" class="hidden border">
+                                <p>Désolé, votre navigateur ne supporte pas Canvas. Mettez-vous à jour</p>
+                            </canvas>
+                        </figure>
+
+                        <input id="reserver" class="hidden btn__reserver bold" type="submit" value="Je réserve">
                     </fieldset>
 
                 </form>
 
-            <div id="infosReservation" class="hidden">
+            <div id="infosReservation" class="hidden border flex__column infos__reservation">
                 <p id="rsvInfos"></p>
                 <p>
-                    Temps restant avant annulation de la réservation : <span id="mins"></span> min <span id="sec"></span>
+                    Temps restant avant annulation de la réservation :<br>
+                    <span class="timer"><span id="mins"></span> min <span id="sec"></span></span>
                 </p>
 
-                <button id="cancel">
-                    Annuler ma réservation
+                <button id="cancel" class="bold">
+                    J'annule ma réservation
                 </button>
             </div>
 
@@ -153,18 +170,12 @@
 <!-- ........................... Pied de page ..................................... -->
 
             <footer>
-
-                <ul>
-                    <li>
-                        <a href='mentions_legales.html' target='_blank'>
-                            Mentions légales
-                        </a>
-                    </li>
-                    <li>
-                        Réaliser par Gael Dedenis dans le cadre d'un projet de formation. Ceci est donc un site fictif. Utilisant les technologies des API Leafletjs & JCDecaux. Logo et markers ont été réalisé par Stéphanie Dedenis.
-                    </li>
-                </ul>
-
+                    <p class="typo">
+                        Réaliser par Gael Dedenis dans le cadre d'un projet de formation. Ceci est donc un site fictif.<br>
+                        Utilisant les technologies des API Leafletjs & JCDecaux.<br>
+                        Font made from <a href="http://www.onlinewebfonts.com">oNline Web Fonts</a> is licensed by CC BY 3.0<br>
+                        Logo et markers ont été réalisé par Stéphanie Dedenis.
+                    </p>
             </footer>
 
         </main>
