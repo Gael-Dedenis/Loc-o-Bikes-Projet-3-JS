@@ -31,6 +31,7 @@
         <meta name="twitter:creator" content="Gael Dedenis">
 
     <!-- ............... Css ................. -->
+        <link rel="stylesheet" href="css/normalize.css">
         <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -52,42 +53,54 @@
                 </div>
 
                 <p>
-                    Retrouvez toutes les stations de vélos disponnibles sur Lyon. Profitez des bienfaits du déplacement à vélo pour un petit prix!
+                    Retrouvez toutes les stations de vélos disponnibles sur Lyon. Profitez des bienfaits du déplacement sur un vélo à petit prix!
                 </p>
 
 <!-- .................... Slider ........................ -->
 
-                <div id="carousel--container" class="flex__column">
+                <div id="carousel--container">
 
-                        <figure class="border flex__column">
-                            <img src="img/diapos/diapo_1.jpg" alt="On sélectionne une station sur la carte parmie celles disponnibles.">
-                            <figcaption>
-                                <span> 1 </span>
-                                Sélectionnez une station de votre choix.
+                        <figure class="carousel_diapos">
+                            <img src="img/diapos/diapo_1.JPG" alt="On sélectionne une station sur la carte parmie celles disponnibles.">
+                            <figcaption class="typo">
+                                <span> 1) </span>
+                                Sélectionnez une station de votre choix.<br>
+                                La couleur du marqueur indique si il reste des vélos disponnibles.<br>
+                                Vert : il reste des vélos disponnibles.<br>
+                                Orange : il reste peu de vélos disponnibles.<br>
+                                Rouge : il n'y a plus de vélos disponnibles. <br>
+                                Gris: la station est fermée !
                             </figcaption>
                         </figure>
 
-                        <figure class="border flex__column">
-                            <img src="img/diapos/diapo_2.jpg" alt="On voit les détails de la station sélectionnée précédement et on remplie les champs nécéssaires, puis on clique sur le bouton pour accepter les conditions d'utilisations et 'Réserver'.">
-                            <figcaption>
-                                <span> 2 </span>
-                                Regardez les détails de la station.
+                        <figure class="carousel_diapos">
+                            <img src="img/diapos/diapo_2.JPG" alt="On voit les détails de la station sélectionnée précédement et on remplie les champs nécéssaires, puis on clique sur le bouton pour accepter les conditions d'utilisations et 'Réserver'.">
+                            <figcaption class="typo padding__diapo">
+                                <span> 2) </span>
+                                Nous retrouvons les détails de la station.<br>
+                                Si il y reste des vélos disponnibles, <br>
+                                vous pourrez renseigner votre prénom et votre nom.
                             </figcaption>
                         </figure>
 
-                        <figure class="border flex__column">
-                            <img src="img/diapos/diapo_3.jpg" alt="On signe dans l'encadrement pour valider la réservation.">
-                            <figcaption>
-                                <span> 3 </span>
-                                Remplissez les champs pour réserver.
+                        <figure class="carousel_diapos">
+                            <img src="img/diapos/diapo_3.JPG" alt="On signe dans l'encadrement pour valider la réservation.">
+                            <figcaption class="typo padding__diapo">
+                                <span> 3) </span>
+                                Une fois votre prénom et votre nom renseigner, <br>
+                                vous pouvez signer dans l'encadré. <br>
+                                Puis cliquez sur "Je réserve".
                             </figcaption>
                         </figure>
 
-                        <figure class="border flex__column">
-                            <img src="img/diapos/diapo_4.jpg" alt="On clique sur le bouton annuler pour annuler la réservation en cours.">
-                            <figcaption>
-                                <span> 4 </span>
-                                Pour annuler sa réservation en cours.
+                        <figure class="carousel_diapos">
+                            <img src="img/diapos/diapo_4.JPG" alt="On clique sur le bouton annuler pour annuler la réservation en cours.">
+                            <figcaption class="typo padding__diapo">
+                                <span> 4) </span>
+                                Vous pouvez annuler une réservation en cours, <br>
+                                en cliquant simplement sur "J'annule ma réservation".<br>
+                                Si vous faites une nouvelle réservation, <br>
+                                celle-ci effacera l'ancienne qui était en cours.
                             </figcaption>
                         </figure>
 
@@ -148,7 +161,7 @@
                             </canvas>
                         </figure>
 
-                        <input id="reserver" class="hidden btn__reserver bold" type="submit" value="Je réserve">
+                        <input id="reserver" class="hidden btn__reserver bold typo" type="submit" value="Je réserve">
                     </fieldset>
 
                 </form>
@@ -160,7 +173,7 @@
                     <span class="timer"><span id="mins"></span> min <span id="sec"></span></span>
                 </p>
 
-                <button id="cancel" class="bold">
+                <button id="cancel" class="bold typo">
                     J'annule ma réservation
                 </button>
             </div>

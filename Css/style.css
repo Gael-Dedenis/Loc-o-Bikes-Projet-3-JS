@@ -1,66 +1,142 @@
 /* +++++ +++++ +++++ ++++++++++++ +++++ +++++ +++++ */
 /* +++++ +++++ +++++ Mobile-First +++++ +++++ +++++ */
 /* +++++ +++++ +++++ ++++++++++++ +++++ +++++ +++++ */
-
+* {
+    margin : 0;
+    padding: 0;
+}
+body {
+    background-color: #d6f7e3;
+}
 main {
-    display: flex;
-    flex-direction: column;
+    display        : flex;
+    flex-direction : column;
     justify-content: space-between;
-    align-items: stretch;
+    align-items    : stretch;
 }
 
-ul {
+h1, h2, h3 {
+    color: #648CD7;
+}
+
+h2, h3 {
+    text-decoration: underline;
+}
+
+h1 {
+    margin-top   : 10px;
+    margin-bottom: 20px;
+    font-size    : 3em;
+}
+
+h3 {
+    font-family: 'Bree Serif', serif;
+}
+
+ul, ol {
     list-style: none;
 }
 
+.logo__svg {
+    display: none;
+}
+
+.typo {
+    font-family: 'Bree Serif', serif;
+}
+
 .border {
-    border: 1px solid rgb(0, 0, 0);
+    border       : 2px solid #648CD7;
     border-radius: 3px;
 }
 
 .flex__column {
-    display: flex;
-    flex-direction: column;
+    display        : flex;
+    flex-direction : column;
     justify-content: space-between;
-    align-items: center;
+    align-items    : center;
 }
 
 .flex__row {
-    display: flex;
-    flex-direction: row;
+    display        : flex;
+    flex-direction : row;
     justify-content: center;
-    align-items: center;
+    align-items    : center;
+}
+
+.hidden {
+    display: none;
+}
+
+.bold {
+    font-weight: bold;
+    color      : #648CD7;
 }
 
 /* +++++ +++++ +++++ header +++++ +++++ +++++ */
 
-figure.flex__column img {
-    height: auto;
-    max-width: 100%;
+header {
+    margin-bottom: 20px;
+}
+
+figure img {
+    margin-top: 10px;
+    max-width : 96%;
+    max-height: 310px;
+    height    : auto;
+    object-fit: contain;
+}
+
+header p {
+    padding: 5px 10px;
+    text-align: center;
+}
+
+header:nth-child(3) {
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    align-items    : center;
+    margin-top   : 15px;
+    margin-bottom: 10px;
 }
 
 figure figcaption {
     margin-bottom: 40px;
-    font-size: 1rem;
+    padding      : 5px 10px;
+    font-size    : 1rem;
+    text-align   : left;
+    color: #648CD7;
+}
+
+
+.padding__diapo {
+    padding-top: 80px;
 }
 
 header ul.flex__row {
-    justify-content: space-around;
-    margin-top: 5px;
-    padding: 10px 12px;
-    width: 50%;
+    justify-content : space-around;
+    margin-top      : 10px;
+    padding         : 10px 12px;
+    width           : 75%;
+    background-color: #FFF;
 }
 
 /* +++++ +++++ +++++ Carrousel +++++ +++++ +++++ */
 
 .carousel {
-    position: relative;
-    overflow: hidden;
+    position        : relative;
+    overflow        : hidden;
+    margin          : 0 auto;
+    border          : 2px solid #648CD7;
+    border-radius   : 3px;
+    width           : 92%;
+    background-color: #FFF;
 }
 
 .carousel__panorama::after {
     content: "";
-    clear: both;
+    clear  : both;
     display: table;
 }
 
@@ -68,51 +144,332 @@ header ul.flex__row {
     float: left;
 }
 
+.carousel_diapos {
+    display        : flex;
+    flex-direction : column;
+    justify-content: space-between;
+    align-items    : center;
+}
+
 /* +++++ +++++ +++++ Carrousel controls +++++ +++++ +++++ */
 
 li i {
-    display: inline-block;
+    display    : inline-block;
     padding-top: 10px;
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    cursor:pointer;
+    width      : 30px;
+    height     : 30px;
+    text-align : center;
+    cursor     : pointer;
+}
+
+li i:hover {
+    color: #648CD7;
 }
 
 /* +++++ +++++ +++++ MAP +++++ +++++ +++++ */
 
 .bloc {
     margin: 0 auto;
-    border: 2px solid black;
-    height: 600px;
-     width: 98%;
+    border: 2px solid #648CD7;
+    height: 50vh;
+    width : 90vw;
 }
 
 /* +++++ +++++ +++++ Reservation +++++ +++++ +++++ */
 
-.hidden {
-    display: none;
+form {
+    margin-top: 15px;
+}
+
+form h2 {
+    margin-bottom: 0;
+}
+
+fieldset {
+    display        : flex;
+    flex-direction : column;
+    justify-content: space-between;
+    align-items    : center;
+    border         : 0;
+}
+
+fieldset label {
+    margin-bottom: 5px;
+}
+
+address {
+    margin-bottom: 10px;
+    width        : 80vw;
+}
+
+address ol {
+    padding   : 0;
+    text-align: left;
+}
+
+.input input {
+    text-align: center;
+}
+
+input[type="submit"] {
+    margin       : 0 auto;
+    margin-bottom: 15px;
+    border       : 1px solid #648CD7;
+    width        : 40%;
+    max-width    : 300px;
+    width        : 28%;
+    height       : 30px;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:active {
+    border : 1px solid #648CD7;
 }
 
 
 /* +++++ +++++ +++++ Canvas +++++ +++++ +++++ */
 canvas {
-    border: 1px solid black;
-    width: 300px;
-    height: 150px;
+    margin-top      : 15px;
+    margin-bottom   : 15px;
+    width           : 300px;
+    height          : 150px;
+    background-color: #FFF;
 }
 
+/* +++++ +++++ +++++ Infos Rsv +++++ +++++ +++++ */
+section > div {
+    font-size       : 0.8em;
+    background-color: #FFF;
+}
+
+div h3 {
+    text-align: center;
+}
+
+div > p {
+    margin: 5px;
+}
+
+.timer {
+    display   : inline-block;
+    width     : 100%;
+    text-align: center;
+    font-size : 1.3em;
+}
+
+div > button {
+    margin-bottom: 10px;
+    border       : 1px solid #648CD7;
+    max-width    : 300px;
+    width        : 60%;
+    height       : 30px;
+}
+
+div > button:hover,
+div > button:active {
+    border : 1px solid #648CD7;
+}
+/* +++++ +++++ +++++ Footer +++++ +++++ +++++ */
+footer p {
+    margin    : 10px auto;
+    width     : 80%;
+    text-align: center;
+    font-size : 0.6em;
+}
 
 /* +++++ +++++ +++++ +++++++++++++ +++++ +++++ +++++ */
 /* +++++ +++++ +++++ Media Queries +++++ +++++ +++++ */
 /* +++++ +++++ +++++ +++++++++++++ +++++ +++++ +++++ */
 
-/* +++++ BreakPoint 768px ( => tablette) +++++ */
-@media screen and (min-width: 768px) {
+/* +++++ BreakPoint 675px ( => tablette) +++++ */
+@media screen and (min-width: 675px) {
 
+    body {
+        font-size: 1.2em;
+    }
+
+    h1 {
+        font-size: 3.2em;
+    }
+
+    h2 {
+        font-size: 2.2em;
+    }
+
+    h3 {
+        margin-bottom: 15px;
+        font-size: 1.5em;
+    }
+
+    /* +++++ header +++++ */
+    .head {
+        display        : flex;
+        flex-direction : row;
+        justify-content: space-evenly;
+        align-items    : center;
+        width          : 96%;
+    }
+
+    .logo__svg {
+        display: block;
+        height : 200px;
+        width  : 40%;
+    }
+
+    header p {
+        width: 82vw;
+    }
+
+    header:nth-child(3) {
+        margin-top: 20px;
+    }
+
+    /* +++++ Carousel +++++ */
+    .carousel_diapos {
+        flex-direction : row;
+        justify-content: center;
+    }
+
+    figure img {
+        max-width: 50%;
+    }
+
+    figure figcaption {
+        display: inline-flex;
+    }
+
+    .padding__diapo {
+        padding-top: 50px;
+    }
+
+    /* +++++ Carousel controls +++++ */
+
+    header ul.flex__row {
+        margin-top: -4px;
+    }
+
+    /* +++++ Réservation +++++ */
+
+    fieldset {
+        flex-direction : row;
+        flex-wrap      : wrap;
+        justify-content: space-around;
+        align-items    : center;
+    }
+
+    address {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+    }
+
+    .input {
+        justify-content: center;
+        margin         : 10px auto;
+        width          : 40%;
+        height         : 50px;
+    }
+
+    .input input {
+        height    : 25px;
+        font-size : 1.1em;
+        text-align: center;
+    }
+
+    .btn__reserver {
+        width : 40vw;
+        height: 4vh;
+    }
+
+    .infos__reservation {
+        width: 80%;
+    }
+
+    section > div {
+        font-size: 1em;
+    }
+
+    button {
+        width : 40vw;
+        height: 4vh;
+    }
+
+    /* +++++ Canvas +++++ */
+    .container__canvas {
+        width: 100%;
+    }
 }
 
 /* +++++ BreakPoint 992px ( => Pc Hybride / Pc) +++++ */
 @media screen and (min-width: 992px) {
+    h1 {
+        width: 45%;
+    }
+
+    p {
+        max-width: 900px;
+    }
+
+    /* +++++ header +++++ */
+    .logo__svg {
+        width: 50%;
+    }
+
+    header p {
+        font-size: 1.2em;
+    }
+
+    /* +++++ Carousel +++++ */
+
+    .carousel {
+        width: 90%;
+        max-width: 1500px;
+    }
+
+    figure img {
+        margin-bottom: 20px;
+        max-width    : 60%;
+    }
+
+    figure figcaption {
+        font-size: 1.2em;
+    }
+
+    /* +++++ Carousel Controls +++++ */
+
+    header ul.flex__row {
+        margin-top: -2px;
+        width     : 34%;
+    }
+
+    /* +++++ Map +++++ */
+
+    .bloc {
+        height   : 60vh;
+        width    : 80%;
+        max-width: 1500px;
+    }
+
+    /* +++++ Reservation +++++ */
+
+    address {
+        width: 100%;
+    }
+
+    fieldset {
+        width    : 80%;
+        max-width: 700px;
+    }
+
+    .input {
+        margin-top: 13px;
+        width     : 45%;
+    }
+
+    div.infos__reservation {
+        max-width: 900px;
+    }
 
 }
