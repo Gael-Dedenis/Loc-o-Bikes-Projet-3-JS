@@ -105,7 +105,7 @@ class Map {
     }
 
     setPopup(station) {
-        this.marker.bindPopup(station.name + "<br>" + station.address + "<br> Vélos disponnibles : " + station.available_bikes).on("click", this.getDetailsStation.bind(this, station));
+        this.marker.bindPopup(station.name + "<br>" + station.address + "<br> Vélos disponibles : " + station.available_bikes).on("click", this.getDetailsStation.bind(this, station));
     }
 
     getDetailsStation(station) {
