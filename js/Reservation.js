@@ -11,8 +11,9 @@ class Reservation {
         this.seconde          = document.getElementById("sec");
         this.storedLastName   = "";
         this.storedFirstName  = "";
-        this.timer            = "";
-        this.timeMin          = 20;
+        this.timer            = false;
+        this.timeToCancel     = 20;
+        this.timeMin          = this.timeToCancel;
         this.timeSec          = 0;
 
         this.setUIReservationEvents();
@@ -115,7 +116,7 @@ class Reservation {
     // méthode pour valider la réservation.
     setRsv() {
         this.timeSec = 0;
-        this.timeMin = 20;
+        this.timeMin = this.timeToCancel;
         clearInterval(this.timer);
 
         this.setDataLocalUser();
@@ -133,36 +134,29 @@ class Reservation {
         sessionStorage.setItem("timeMin",this.timeMin);
         sessionStorage.setItem("timeSec",this.timeSec);
 
-        if (this.timeSec <= 0) {
+        if (this.timeSec <= 0 && this.timeMin>0) {
             this.timeSec = 60;
             this.timeMin--;
-            this.minute.innerHTML = this.timeMin;
         }
+        this.minute.innerHTML = this.timeMin + ''; //cast en string
 
         if (this.timeMin <= 0 && this.timeSec <= 0) {
-            clearInterval(this.timer);
-
-            this.timeSec = 60;
-            this.timeMin = 20;
-
-            sessionStorage.setItem("timeMin",this.timeMin);
-            sessionStorage.setItem("timeSec",this.timeSec);
+			this.cancelReservation( true );
         }
 
         this.timeSec--;
-        this.seconde.innerHTML = this.timeSec;
+        this.seconde.innerHTML = this.timeSec + '';
     }
 
     //Cancel reservation
-    cancelReservation () {
+    cancelReservation() {
         clearInterval(this.timer);
 
         this.timeSec = 60;
-        this.timeMin = 20;
+        this.timeMin = this.timeToCancel;
         sessionStorage.setItem("timeMin",this.timeMin);
         sessionStorage.setItem("timeSec",this.timeSec);
 
-        this.infosReservation.classList.add("hidden");
+        this.infosReservation.classList.add("hidden")
     }
-
 }
