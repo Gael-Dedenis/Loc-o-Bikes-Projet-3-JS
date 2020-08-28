@@ -24,7 +24,9 @@ h2, h3 {
 }
 
 h1 {
-    font-size: 3em;
+    margin-top   : 10px;
+    margin-bottom: 20px;
+    font-size    : 3em;
 }
 
 h3 {
@@ -62,31 +64,59 @@ ul, ol {
     align-items    : center;
 }
 
-
 .hidden {
     display: none;
 }
 
 .bold {
     font-weight: bold;
+    color      : #648CD7;
 }
 
 /* +++++ +++++ +++++ header +++++ +++++ +++++ */
 
-figure.flex__column img {
-	max-width: 96%;
-	height: auto;
-	object-fit: contain;
+header {
+    margin-bottom: 20px;
+}
+
+figure img {
+    margin-top: 10px;
+    max-width : 96%;
+    max-height: 310px;
+    height    : auto;
+    object-fit: contain;
+}
+
+header p {
+    padding: 5px 10px;
+    text-align: center;
+}
+
+header:nth-child(3) {
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+    align-items    : center;
+    margin-top   : 15px;
+    margin-bottom: 10px;
 }
 
 figure figcaption {
     margin-bottom: 40px;
+    padding      : 5px 10px;
     font-size    : 1rem;
+    text-align   : left;
+    color: #648CD7;
+}
+
+
+.padding__diapo {
+    padding-top: 80px;
 }
 
 header ul.flex__row {
     justify-content : space-around;
-    margin-top      : 5px;
+    margin-top      : 10px;
     padding         : 10px 12px;
     width           : 75%;
     background-color: #FFF;
@@ -95,8 +125,13 @@ header ul.flex__row {
 /* +++++ +++++ +++++ Carrousel +++++ +++++ +++++ */
 
 .carousel {
-    position: relative;
-    overflow: hidden;
+    position        : relative;
+    overflow        : hidden;
+    margin          : 0 auto;
+    border          : 2px solid #648CD7;
+    border-radius   : 3px;
+    width           : 92%;
+    background-color: #FFF;
 }
 
 .carousel__panorama::after {
@@ -109,9 +144,11 @@ header ul.flex__row {
     float: left;
 }
 
-.carousel__item figure {
-    min-width : 90vw;
-    min-height: 50vh;
+.carousel_diapos {
+    display        : flex;
+    flex-direction : column;
+    justify-content: space-between;
+    align-items    : center;
 }
 
 /* +++++ +++++ +++++ Carrousel controls +++++ +++++ +++++ */
@@ -122,7 +159,11 @@ li i {
     width      : 30px;
     height     : 30px;
     text-align : center;
-    cursor     :pointer;
+    cursor     : pointer;
+}
+
+li i:hover {
+    color: #648CD7;
 }
 
 /* +++++ +++++ +++++ MAP +++++ +++++ +++++ */
@@ -136,6 +177,10 @@ li i {
 
 /* +++++ +++++ +++++ Reservation +++++ +++++ +++++ */
 
+form {
+    margin-top: 15px;
+}
+
 form h2 {
     margin-bottom: 0;
 }
@@ -145,7 +190,7 @@ fieldset {
     flex-direction : column;
     justify-content: space-between;
     align-items    : center;
-    border: 0;
+    border         : 0;
 }
 
 fieldset label {
@@ -153,16 +198,32 @@ fieldset label {
 }
 
 address {
-    width: 80vw;
+    margin-bottom: 10px;
+    width        : 80vw;
 }
+
 address ol {
     padding   : 0;
     text-align: left;
 }
 
+.input input {
+    text-align: center;
+}
+
 input[type="submit"] {
-    max-width: 300px;
-    border: 1px solid #648CD7;
+    margin       : 0 auto;
+    margin-bottom: 15px;
+    border       : 1px solid #648CD7;
+    width        : 40%;
+    max-width    : 300px;
+    width        : 28%;
+    height       : 30px;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:active {
+    border : 1px solid #648CD7;
 }
 
 
@@ -198,14 +259,20 @@ div > p {
 
 div > button {
     margin-bottom: 10px;
-    border: 1px solid #648CD7;
-    max-width: 300px;
+    border       : 1px solid #648CD7;
+    max-width    : 300px;
+    width        : 60%;
+    height       : 30px;
 }
 
+div > button:hover,
+div > button:active {
+    border : 1px solid #648CD7;
+}
 /* +++++ +++++ +++++ Footer +++++ +++++ +++++ */
 footer p {
-    margin: 10px auto;
-    width: 80%;
+    margin    : 10px auto;
+    width     : 80%;
     text-align: center;
     font-size : 0.6em;
 }
@@ -230,6 +297,7 @@ footer p {
     }
 
     h3 {
+        margin-bottom: 15px;
         font-size: 1.5em;
     }
 
@@ -251,6 +319,35 @@ footer p {
     header p {
         width: 82vw;
     }
+
+    header:nth-child(3) {
+        margin-top: 20px;
+    }
+
+    /* +++++ Carousel +++++ */
+    .carousel_diapos {
+        flex-direction : row;
+        justify-content: center;
+    }
+
+    figure img {
+        max-width: 50%;
+    }
+
+    figure figcaption {
+        display: inline-flex;
+    }
+
+    .padding__diapo {
+        padding-top: 50px;
+    }
+
+    /* +++++ Carousel controls +++++ */
+
+    header ul.flex__row {
+        margin-top: -4px;
+    }
+
     /* +++++ Réservation +++++ */
 
     fieldset {
@@ -270,12 +367,13 @@ footer p {
 
     .input {
         justify-content: center;
-        width          : 35vw;
-        height         : 15vh;
+        margin         : 10px auto;
+        width          : 40%;
+        height         : 50px;
     }
 
     .input input {
-        height    : 4vh;
+        height    : 25px;
         font-size : 1.1em;
         text-align: center;
     }
@@ -286,7 +384,7 @@ footer p {
     }
 
     .infos__reservation {
-        width: 60vw;
+        width: 80%;
     }
 
     section > div {
@@ -319,14 +417,55 @@ footer p {
         width: 50%;
     }
 
+    header p {
+        font-size: 1.2em;
+    }
+
+    /* +++++ Carousel +++++ */
+
+    .carousel {
+        width: 90%;
+        max-width: 1500px;
+    }
+
+    figure img {
+        margin-bottom: 20px;
+        max-width    : 60%;
+    }
+
+    figure figcaption {
+        font-size: 1.2em;
+    }
+
+    /* +++++ Carousel Controls +++++ */
+
+    header ul.flex__row {
+        margin-top: -2px;
+        width     : 34%;
+    }
+
+    /* +++++ Map +++++ */
+
+    .bloc {
+        height   : 60vh;
+        width    : 80%;
+        max-width: 1500px;
+    }
+
     /* +++++ Reservation +++++ */
+
+    address {
+        width: 100%;
+    }
+
     fieldset {
         width    : 80%;
         max-width: 700px;
     }
 
     .input {
-        width: 35%;
+        margin-top: 13px;
+        width     : 45%;
     }
 
     div.infos__reservation {
